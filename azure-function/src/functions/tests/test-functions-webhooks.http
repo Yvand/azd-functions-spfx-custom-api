@@ -1,0 +1,5 @@
+# @name getData
+GET {{ $dotenv %baseUrl }}/api/getData?{{ $dotenv %authCode }} HTTP/1.1
+Accept: application/json
+
+###
