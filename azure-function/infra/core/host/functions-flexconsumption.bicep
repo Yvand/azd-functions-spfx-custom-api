@@ -46,7 +46,7 @@ resource stg 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
   name: storageAccountName
 }
 
-resource functions 'Microsoft.Web/sites@2023-12-01' = {
+resource functions 'Microsoft.Web/sites@2024-04-01' = {
   name: name
   location: location
   tags: tags
@@ -98,12 +98,17 @@ resource functions 'Microsoft.Web/sites@2023-12-01' = {
       AzureWebJobsStorage__credential: 'managedidentity'
       APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
       MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: authClientSecretValue
+      WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
     })
   }
 
   resource authconfig 'config' = {
     name: 'authsettingsV2'
     properties: {
+      platform: {
+        enabled: true
+        runtimeVersion: '~1'
+      }
       globalValidation: {
         unauthenticatedClientAction: 'RedirectToLoginPage'
         requireAuthentication: true
@@ -113,6 +118,9 @@ resource functions 'Microsoft.Web/sites@2023-12-01' = {
         requireHttps: true
         routes: {
           apiPrefix: '/.auth'
+        }
+        forwardProxy: {
+          convention: 'NoProxy'
         }
       }
       identityProviders: {
@@ -126,7 +134,7 @@ resource functions 'Microsoft.Web/sites@2023-12-01' = {
                 identities: null
               }
             }
-            // jwtClaimChecks: {}
+            jwtClaimChecks: {}
           }
           login: {
             disableWWWAuthenticate: false
@@ -134,8 +142,22 @@ resource functions 'Microsoft.Web/sites@2023-12-01' = {
           registration: {
             clientId: authAppClientId
             clientSecretSettingName: authClientSecretSettingName
-            openIdIssuer: 'https://sts.windows.net/3989f541-267c-4dcf-94f1-98a4d20d2b23/v2.0'
+            openIdIssuer: 'https://sts.windows.net/${tenant().tenantId}/v2.0'
           }
+        }
+      }
+      login: {
+        cookieExpiration: {
+          convention: 'FixedTime'
+          timeToExpiration: '08:00:00'
+        }
+        nonce: {
+          validateNonce: true
+          nonceExpirationInterval: '00:05:00'
+        }
+        tokenStore: {
+          enabled: false
+          tokenRefreshExtensionHours: 72
         }
       }
     }
@@ -149,3 +171,4 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
 output name string = functions.name
 output uri string = 'https://${functions.properties.defaultHostName}'
 output identityPrincipalId string = identityType == 'SystemAssigned' ? functions.identity.principalId : ''
+// output defaultKey string = listkeys(concat(resourceId('Microsoft.Web/sites', functions.name), '/host/default/'), '2024-04-01').functionKeys.default

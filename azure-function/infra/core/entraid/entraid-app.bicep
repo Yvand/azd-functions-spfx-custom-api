@@ -2,6 +2,7 @@
 
 extension microsoftGraphV1
 
+// https://github.com/microsoftgraph/msgraph-bicep-types
 // az deployment sub create --location francecentral --template-file main.bicep
 // https://learn.microsoft.com/en-us/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI
 

@@ -4,6 +4,7 @@
     },
     // specify an alias for the version of the v1.0 dynamic types package you want to use
     "extensions": {
+      // https://mcr.microsoft.com/en-us/artifact/mar/bicep/extensions/microsoftgraph/v1.0/tags
       "microsoftGraphV1": "br:mcr.microsoft.com/bicep/extensions/microsoftgraph/v1.0:0.1.8-preview"
     }
 }
