@@ -9,6 +9,10 @@ env:
   WORKING_DIRECTORY: './spfx-custom-api'
   SPFX_PACKAGE_NAME: 'azd-function-custom-api.sppkg'
 
+defaults:
+  run:
+    working-directory: ${{ env.WORKING_DIRECTORY }}
+
 jobs:
   build-spfx-solution:
     runs-on: ubuntu-latest
@@ -20,10 +24,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Run npm ci
-        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npm ci
       - name: Bundle & Package
-        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           gulp bundle --ship
           gulp package-solution --ship
