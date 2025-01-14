@@ -9,13 +9,12 @@ env:
   WORKING_DIRECTORY: './spfx-custom-api'
   SPFX_PACKAGE_NAME: 'azd-function-custom-api.sppkg'
 
-defaults:
-  run:
-    working-directory: ${{ env.WORKING_DIRECTORY }}
-
 jobs:
   build-spfx-solution:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
