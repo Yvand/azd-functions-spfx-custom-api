@@ -10,7 +10,7 @@ This is a minimal SPFx solution, whch contains a simple webpart that requests an
 
 ## Things to know
 
-- hardcoded resource name in [`config/package-solution.json`](spfx-custom-api/config/package-solution.json#L38)
+- hardcoded resource name in [`config/package-solution.json`](config/package-solution.json#L38) - TODO - set to 'Yvand/azd-function-spfx-custom-api' ?
 
 ## Minimal Path to Awesome
 
