@@ -1,0 +1,28 @@
+name: Build the SPFx solution
+on:
+  push:
+    branches:
+      - main
+
+env:
+  NODE_VERSION: '18.x'
+  WORKING_DIRECTORY: './azd-function-custom-api'
+
+jobs:
+  build-spfx-solution:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Run npm ci
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npm ci
+      - name: Bundle & Package
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          gulp bundle --ship
+          gulp package-solution --ship
