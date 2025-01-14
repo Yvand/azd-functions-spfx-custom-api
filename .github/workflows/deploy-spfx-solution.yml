@@ -29,5 +29,5 @@ jobs:
           gulp package-solution --ship
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.SPFX_PACKAGE_NAME }}
+          name: 'SPFx package'
           path: '${{ env.WORKING_DIRECTORY }}/sharepoint/solution/*.sppkg'
