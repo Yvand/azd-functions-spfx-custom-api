@@ -1,5 +1,5 @@
 export const CommonConfig = {
-    ClientAppId: "5d7c36dd-9731-4fc2-9d3a-fe945f7e0084",
+    ClientAppId: "77dd86d9-ea20-4816-89d7-4cc098e685ed",
     FunctionAppHost: "func-api-azzjijutvy2vc.azurewebsites.net",
     FunctionAppCode: "Yjnsljk44wahtUzwQkOkco405m87lKYXVQ7o8tO9Ok9_AzFu1anjDw==",
 }

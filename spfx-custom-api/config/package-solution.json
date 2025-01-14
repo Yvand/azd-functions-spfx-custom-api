@@ -3,7 +3,7 @@
   "solution": {
     "name": "custom-api-client-side-solution",
     "id": "256ce3d8-d60a-487a-85b0-4302c2f67e32",
-    "version": "1.4.0.0",
+    "version": "1.5.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,

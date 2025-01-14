@@ -30,7 +30,7 @@ resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
     oauth2PermissionScopes: [
       {
         adminConsentDescription: 'Allows the app to access ${appRegistrationName} on behalf of the signed-in user.'
-        adminConsentDisplayName: 'Access the API on your behalf'
+        adminConsentDisplayName: 'Access ${appRegistrationName}'
         id: 'c15bfc6e-9c52-4e6f-97ff-f595ff93b4a5'
         isEnabled: true
         type: 'User'
