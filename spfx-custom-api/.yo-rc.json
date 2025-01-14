@@ -9,7 +9,7 @@
     },
     "version": "1.20.0",
     "libraryName": "azd-function-custom-api",
-    "libraryId": "256ce3d8-d60a-487a-85b0-4302c2f67e32",
+    "libraryId": "42d3f09b-ca6f-4508-b63f-a3d2dcd4c814",
     "environment": "spo",
     "packageManager": "npm",
     "solutionName": "azd-function-custom-api",
