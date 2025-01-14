@@ -6,7 +6,11 @@ This is a minimal SPFx solution, whch contains a simple webpart that requests an
 
 ## Prerequisites
 
-> Any special pre-requisites?
++ [Node.js 18](https://www.nodejs.org/)
+
+## Things to know
+
+- hardcoded resource name in (`config/package-solution.json`)[spfx-custom-api/config/package-solution.json#L38]
 
 ## Minimal Path to Awesome
 
