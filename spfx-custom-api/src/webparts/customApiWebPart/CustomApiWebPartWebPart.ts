@@ -1,30 +1,33 @@
 import { Version } from '@microsoft/sp-core-library';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { AadHttpClient, HttpClientResponse } from '@microsoft/sp-http';
-
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+import { CommonConfig, formatError } from '../../common';
 import styles from './CustomApiWebPartWebPart.module.scss';
-import { CommonConfig } from '../../common';
 
 export interface ICustomApiWebPartWebPartProps {
 }
 
 export default class CustomApiWebPartWebPart extends BaseClientSideWebPart<ICustomApiWebPartWebPartProps> {
-  public render(): void {
-    this.domElement.innerHTML = `<div class="${styles.customApiWebPart}">Webpart is loaded.</div>`;
-    this.context.aadHttpClientFactory
-      .getClient(CommonConfig.ClientAppId)
-      .then((client: AadHttpClient): void => {
-        this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Got the access token for resource '${CommonConfig.ClientAppId}', connecting to the function app...</div>`;
-        client.get(`https://${CommonConfig.FunctionAppHost}/api/getData?code=${CommonConfig.FunctionAppCode}`, AadHttpClient.configurations.v1)
-          .then((response: HttpClientResponse) => {
-            response.json().then((data: any) => {
-              this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">${JSON.stringify(data)}</div>`;
-            });
-          })
-          .catch((error: any) => {
-            this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">${error.message}</div>`;
-          });
-      });
+  public async render(): Promise<void> {
+    let output: string = "Webpart is loaded";
+    try {
+      output += `<br>Getting an access token for the resource '${CommonConfig.ClientAppId}'`;
+      const client: AadHttpClient = await this.context.aadHttpClientFactory.getClient(CommonConfig.ClientAppId);
+      const functionUrl = `https://${CommonConfig.FunctionAppHost}/api/getData?code=${CommonConfig.FunctionAppCode}`;
+      output += `<br>Access token received<br>Connecting to the function app '${functionUrl}'`;
+      const response: HttpClientResponse = await client.get(functionUrl, AadHttpClient.configurations.v1);
+      output += `<br>Data received:<br>`;
+      const data = await response.json();
+      output += JSON.stringify(data);
+    }
+    catch (error) {
+      const errorMessage = formatError(error);
+      output += `<br>Unexpected error: ${errorMessage}`;
+      return;
+    }
+    finally {
+      this.domElement.innerHTML = `<div class="${styles.customApiWebPart}"${output}</div>`;
+    }
   }
 
   protected onInit(): Promise<void> {
