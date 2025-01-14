@@ -7,6 +7,7 @@ on:
 env:
   NODE_VERSION: '18.x'
   WORKING_DIRECTORY: './spfx-custom-api'
+  SPFX_PACKAGE_NAME: 'azd-function-custom-api.sppkg'
 
 jobs:
   build-spfx-solution:
@@ -26,3 +27,7 @@ jobs:
         run: |
           gulp bundle --ship
           gulp package-solution --ship
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SPFX_PACKAGE_NAME }}
+          path: '${{ env.WORKING_DIRECTORY }}/sharepoint/solution/${{ env.SPFX_PACKAGE_NAME }}'
