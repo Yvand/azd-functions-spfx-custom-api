@@ -2,27 +2,27 @@ import { Version } from '@microsoft/sp-core-library';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { AadHttpClient, HttpClientResponse } from '@microsoft/sp-http';
 
-import styles from './HelloWorldWebPart.module.scss';
+import styles from './CustomApiWebPartWebPart.module.scss';
 import { CommonConfig } from '../../common';
 
-export interface IHelloWorldWebPartProps {
+export interface ICustomApiWebPartWebPartProps {
 }
 
-export default class HelloWorldWebPart extends BaseClientSideWebPart<IHelloWorldWebPartProps> {
+export default class CustomApiWebPartWebPart extends BaseClientSideWebPart<ICustomApiWebPartWebPartProps> {
   public render(): void {
-    this.domElement.innerHTML = `<div class="${styles.helloWorld}">Webpart is loaded.</div>`;
+    this.domElement.innerHTML = `<div class="${styles.customApiWebPart}">Webpart is loaded.</div>`;
     this.context.aadHttpClientFactory
       .getClient(CommonConfig.ClientAppId)
       .then((client: AadHttpClient): void => {
-        this.domElement.innerHTML += `<div class="${styles.helloWorld}">Got the access token for resource '${CommonConfig.ClientAppId}', connecting to the function app...</div>`;
+        this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Got the access token for resource '${CommonConfig.ClientAppId}', connecting to the function app...</div>`;
         client.get(`https://${CommonConfig.FunctionAppHost}/api/getData?code=${CommonConfig.FunctionAppCode}`, AadHttpClient.configurations.v1)
           .then((response: HttpClientResponse) => {
             response.json().then((data: any) => {
-              this.domElement.innerHTML += `<div class="${styles.helloWorld}">${JSON.stringify(data)}</div>`;
+              this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">${JSON.stringify(data)}</div>`;
             });
           })
           .catch((error: any) => {
-            this.domElement.innerHTML += `<div class="${styles.helloWorld}">${error.message}</div>`;
+            this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">${error.message}</div>`;
           });
       });
   }

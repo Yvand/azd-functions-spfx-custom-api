@@ -2,17 +2,18 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
   "version": "2.0",
   "bundles": {
-    "hello-world-web-part": {
+    "custom-api-web-part-web-part": {
       "components": [
         {
-          "entrypoint": "./lib/webparts/helloWorld/HelloWorldWebPart.js",
-          "manifest": "./src/webparts/helloWorld/HelloWorldWebPart.manifest.json"
+          "entrypoint": "./lib/webparts/customApiWebPart/CustomApiWebPartWebPart.js",
+          "manifest": "./src/webparts/customApiWebPart/CustomApiWebPartWebPart.manifest.json"
         }
       ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "HelloWorldWebPartStrings": "lib/webparts/helloWorld/loc/{locale}.js"
+    "HelloWorldWebPartStrings": "lib/webparts/helloWorld/loc/{locale}.js",
+    "CustomApiWebPartWebPartStrings": "lib/webparts/customApiWebPart/loc/{locale}.js"
   }
 }
