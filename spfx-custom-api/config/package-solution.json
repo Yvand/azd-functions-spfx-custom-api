@@ -8,18 +8,18 @@
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
     "developer": {
-      "name": "",
-      "websiteUrl": "",
+      "name": "Yvan Duhamel",
+      "websiteUrl": "https://github.com/Yvand/azd-function-spfx-custom-api",
       "privacyUrl": "",
       "termsOfUseUrl": "",
       "mpnId": "Undefined-1.20.0"
     },
     "metadata": {
       "shortDescription": {
-        "default": "custom-api description"
+        "default": "Contains a simple WebPart, which requests an access token to connect to the Azure function"
       },
       "longDescription": {
-        "default": "custom-api description"
+        "default": "Contains a simple WebPart, which requests an access token to connect to the Azure function"
       },
       "screenshotPaths": [],
       "videoUrl": "",
@@ -27,8 +27,8 @@
     },
     "features": [
       {
-        "title": "custom-api Feature",
-        "description": "The feature that activates elements of the custom-api solution.",
+        "title": "azd-function-custom-api Feature",
+        "description": "The feature that activates elements of the azd-function-custom-api solution.",
         "id": "14d53ea8-c6b5-4fe1-a03d-94278f7355ae",
         "version": "1.0.0.0"
       }
