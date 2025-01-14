@@ -1,4 +1,4 @@
-# custom-api
+# azd-function-custom-api
 
 ## Summary
 

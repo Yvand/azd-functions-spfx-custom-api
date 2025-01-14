@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "custom-api-client-side-solution",
+    "name": "azd-function-custom-api-client-side-solution",
     "id": "256ce3d8-d60a-487a-85b0-4302c2f67e32",
     "version": "1.5.0.0",
     "includeClientSideAssets": true,
@@ -41,6 +41,6 @@
     ]
   },
   "paths": {
-    "zippedPackage": "solution/custom-api.sppkg"
+    "zippedPackage": "solution/azd-function-custom-api.sppkg"
   }
 }
