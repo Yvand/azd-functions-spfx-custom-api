@@ -15,6 +15,7 @@ param identityId string = ''
 param identityClientId string = ''
 @allowed(['SystemAssigned', 'UserAssigned'])
 param identityType string
+param corsAllowedOrigin string
 param authAppClientId string
 param authAllowedAudiences string
 @secure()
@@ -46,6 +47,7 @@ module api '../core/host/functions-flexconsumption.bicep' = {
     virtualNetworkSubnetId: virtualNetworkSubnetId
     instanceMemoryMB: instanceMemoryMB
     maximumInstanceCount: maximumInstanceCount
+    corsAllowedOrigin: corsAllowedOrigin
     authAppClientId: authAppClientId
     authAllowedAudiences: authAllowedAudiences
     authClientSecretValue: authClientSecretValue

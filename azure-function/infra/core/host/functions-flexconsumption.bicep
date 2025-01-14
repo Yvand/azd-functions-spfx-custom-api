@@ -25,8 +25,9 @@ param instanceMemoryMB int = 2048
 param maximumInstanceCount int = 100
 
 // authsettings
+param corsAllowedOrigin string
 param authAppClientId string
-param authAllowedAudiences string = 'api://5d7c36dd-9731-4fc2-9d3a-fe945f7e0084'
+param authAllowedAudiences string
 @secure()
 param authClientSecretValue string
 var authClientSecretSettingName = 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
@@ -88,6 +89,10 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
       keyVaultReferenceIdentity: identityType == 'UserAssigned' ? identityId : 'SystemAssigned'
       linuxFxVersion: null
       vnetRouteAllEnabled: true // see above
+      cors: {
+        allowedOrigins: [corsAllowedOrigin]
+        supportCredentials: true
+      }
     }
   }
 

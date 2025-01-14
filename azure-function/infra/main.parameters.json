@@ -16,6 +16,9 @@
         "${ALLOWED_IP_ADDRESSES}"
       ]
     },
+    "sharePointTenantPrefix": {
+      "value": "${SHAREPOINT_TENANT_PREFIX}"
+    },
     "appSettings": {
       "value": {
       }

@@ -47,6 +47,9 @@ param vaultName string = ''
 param addKkeyVault bool = false
 param keyVaultEnableSoftDelete bool = true
 
+param sharePointTenantPrefix string
+var corsAllowedOrigin = 'https://${sharePointTenantPrefix}.sharepoint.com'
+
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -141,6 +144,7 @@ module api './app/api.bicep' = {
       : ''
     appSettings: appSettings
     virtualNetworkSubnetId: serviceVirtualNetwork.outputs.appSubnetID
+    corsAllowedOrigin: corsAllowedOrigin
     authAppClientId: entraAppRegistration.outputs.appRegistrationClientId
     authAllowedAudiences: entraAppRegistration.outputs.appRegistrationIdentifierUri
     authClientSecretValue: entraAppRegistration.outputs.appRegistrationSecret
