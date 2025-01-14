@@ -1,8 +1,6 @@
-# azd-function-custom-api
+# SPFx solution
 
-## Summary
-
-This simple SPFx solution contains a webpart, with properties that can be edited at run-time, which requests an access token to connect to the Azure function.
+This is a minimal SPFx solution, whch contains a simple webpart that requests an access token to connect to the Azure function.
 
 ![version](https://img.shields.io/badge/version-1.20.0-green.svg)
 
