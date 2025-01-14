@@ -20,7 +20,7 @@ export default class CustomApiWebPartWebPart extends BaseClientSideWebPart<ICust
       const data = await response.json();
       output += JSON.stringify(data);
     }
-    catch (error) {
+    catch (error: unknown) {
       const errorMessage = formatError(error);
       output += `<br>Unexpected error: ${errorMessage}`;
       return;

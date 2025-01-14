@@ -4,7 +4,7 @@ export const CommonConfig = {
     FunctionAppCode: "Yjnsljk44wahtUzwQkOkco405m87lKYXVQ7o8tO9Ok9_AzFu1anjDw==",
 }
 
-export function formatError(error: Error | unknown): string {
+export function formatError(error: unknown): string {
     let errorMessage = "";
     if (error instanceof Error) {
         errorMessage += `${error.name}: ${error.message}`;
