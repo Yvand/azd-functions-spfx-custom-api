@@ -1,8 +1,7 @@
 # SPFx solution
 
-This is a minimal SPFx solution, whch contains a simple webpart that requests an access token to connect to the Azure function.
-
-![version](https://img.shields.io/badge/version-1.20.0-green.svg)
+A minimal SPFx solution, with a simple webpart that requests an access token to connect to the Azure function.
+![SPFx version](https://img.shields.io/badge/version-1.20.0-green.svg)
 
 ## Prerequisites
 
