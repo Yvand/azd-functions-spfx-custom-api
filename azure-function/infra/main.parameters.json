@@ -16,6 +16,9 @@
         "${ALLOWED_IP_ADDRESSES}"
       ]
     },
+    "appRegistrationName": {
+      "value": "Yvand/azd-function-spfx-custom-api"
+    },
     "sharePointTenantPrefix": {
       "value": "${SHAREPOINT_TENANT_PREFIX}"
     },

@@ -35,7 +35,7 @@
     ],
     "webApiPermissionRequests": [
       {
-        "resource": "func-api-azzjijutvy2vc",
+        "resource": "Yvand/azd-function-spfx-custom-api",
         "scope": "user_impersonation"
       }
     ]

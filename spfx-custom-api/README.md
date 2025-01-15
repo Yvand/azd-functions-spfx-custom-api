@@ -1,6 +1,7 @@
 # SPFx solution
 
 A minimal SPFx solution, with a simple webpart that requests an access token to connect to the Azure function.
+
 ![SPFx version](https://img.shields.io/badge/version-1.20.0-green.svg)
 
 ## Prerequisites
@@ -9,7 +10,7 @@ A minimal SPFx solution, with a simple webpart that requests an access token to 
 
 ## Things to know
 
-- hardcoded resource name in [`config/package-solution.json`](config/package-solution.json#L38) - TODO - set to 'Yvand/azd-function-spfx-custom-api' ?
++ The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `Yvand/azd-function-spfx-custom-api` and it must match the unique name of the app registration in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function/infra/main.parameters.json#L19) of the azd project.
 
 ## Minimal Path to Awesome
 

@@ -46,7 +46,7 @@ param vNetName string = ''
 param vaultName string = ''
 param addKkeyVault bool = false
 param keyVaultEnableSoftDelete bool = true
-
+param appRegistrationName string = ''
 param sharePointTenantPrefix string
 var corsAllowedOrigin = 'https://${sharePointTenantPrefix}.sharepoint.com'
 
@@ -57,12 +57,15 @@ var tags = { 'azd-env-name': environmentName }
 // Check if allowedIpAddresses is empty or contains only an empty string
 var allowedIpAddressesNoEmptyString = empty(allowedIpAddresses) || (length(allowedIpAddresses) == 1 && contains(allowedIpAddresses, '')) ? [] : allowedIpAddresses
 
+var functionAppServiceName = !empty(apiServiceName) ? apiServiceName : '${abbrs.webSitesFunctions}api-${resourceToken}'
+
 // Create the app registration in Entra ID
 module entraAppRegistration 'core/entraid/entraid-app.bicep' = {
   name: 'entraAppRegistration'
   scope: rg
   params: {
-    appRegistrationName: !empty(apiServiceName) ? apiServiceName : '${abbrs.webSitesFunctions}api-${resourceToken}'
+    appRegistrationName: !empty(appRegistrationName) ? appRegistrationName : functionAppServiceName
+    functionAppServiceName: functionAppServiceName
   }
 }
 
@@ -129,7 +132,7 @@ module api './app/api.bicep' = {
   name: 'api'
   scope: rg
   params: {
-    name: !empty(apiServiceName) ? apiServiceName : '${abbrs.webSitesFunctions}api-${resourceToken}'
+    name: functionAppServiceName
     location: location
     tags: tags
     applicationInsightsName: monitoring.outputs.applicationInsightsName
