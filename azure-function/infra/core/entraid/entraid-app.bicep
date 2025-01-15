@@ -7,9 +7,10 @@ extension microsoftGraphV1
 // https://learn.microsoft.com/en-us/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI
 
 param appRegistrationName string
+param functionAppServiceName string
 
-var identifierUri = 'api://${appRegistrationName}.azurewebsites.net'
-var redirectUri = 'https://${appRegistrationName}.azurewebsites.net/.auth/login/aad/callback'
+var identifierUri = 'api://${functionAppServiceName}.azurewebsites.net'
+var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/login/aad/callback'
 
 // https://learn.microsoft.com/en-us/graph/templates/reference/applications?view=graph-bicep-1.0
 resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
