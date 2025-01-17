@@ -150,6 +150,7 @@ module api './app/api.bicep' = {
     corsAllowedOrigin: corsAllowedOrigin
     authAppClientId: entraAppRegistration.outputs.appRegistrationClientId
     authAllowedAudiences: entraAppRegistration.outputs.appRegistrationIdentifierUri
+    // sharePointPrincipalAppClientId: entraAppRegistration.outputs.sharePointPrincipalAppClientId
     authClientSecretValue: entraAppRegistration.outputs.appRegistrationSecret
   }
 }

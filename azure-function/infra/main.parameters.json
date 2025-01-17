@@ -17,7 +17,7 @@
       ]
     },
     "appRegistrationName": {
-      "value": "Yvand/azd-function-spfx-custom-api"
+      "value": "azd-function-spfx-custom-api"
     },
     "sharePointTenantPrefix": {
       "value": "${SHAREPOINT_TENANT_PREFIX}"

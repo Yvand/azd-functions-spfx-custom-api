@@ -28,6 +28,7 @@ param maximumInstanceCount int = 100
 param corsAllowedOrigin string
 param authAppClientId string
 param authAllowedAudiences string
+// param sharePointPrincipalAppClientId string
 @secure()
 param authClientSecretValue string
 var authClientSecretSettingName = 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
@@ -134,7 +135,7 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
           validation: {
             allowedAudiences: [authAllowedAudiences]
             defaultAuthorizationPolicy: {
-              allowedApplications: null
+              // allowedApplications: [ sharePointPrincipalAppClientId ]
               allowedPrincipals: {
                 identities: null
               }

@@ -18,6 +18,7 @@ param identityType string
 param corsAllowedOrigin string
 param authAppClientId string
 param authAllowedAudiences string
+// param sharePointPrincipalAppClientId string
 @secure()
 param authClientSecretValue string
 
@@ -50,6 +51,7 @@ module api '../core/host/functions-flexconsumption.bicep' = {
     corsAllowedOrigin: corsAllowedOrigin
     authAppClientId: authAppClientId
     authAllowedAudiences: authAllowedAudiences
+    // sharePointPrincipalAppClientId: sharePointPrincipalAppClientId
     authClientSecretValue: authClientSecretValue
   }
 }

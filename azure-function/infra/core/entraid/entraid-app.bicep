@@ -16,7 +16,6 @@ var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/log
 resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
   displayName: appRegistrationName
   uniqueName: appRegistrationName
-
   identifierUris: [identifierUri]
 
   // Enable user authentication
@@ -56,7 +55,7 @@ resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
     }
   ]
 
-  // Create client secret
+  // Create a client secret
   passwordCredentials: [
     {
       displayName: 'generated during Bicep template deployment'
@@ -69,7 +68,13 @@ resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
   appId: appRegistration.appId
 }
 
+// resource sharePointPrincipalApp 'Microsoft.Graph/applications@v1.0' existing =  {
+//   // It does not work: 'uniqueName' of that app is null, the value is only set in 'displayName' (which cannot be used here)
+//   uniqueName: 'SharePoint Online Client Extensibility Web Application Principal'
+// }
+
 output appRegistrationObjectId string = appRegistration.id
 output appRegistrationClientId string = appRegistration.appId
 output appRegistrationSecret string = appRegistration.passwordCredentials[0].secretText
 output appRegistrationIdentifierUri string = appRegistration.identifierUris[0]
+// output sharePointPrincipalAppClientId string = sharePointPrincipalApp.appId

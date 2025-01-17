@@ -3,7 +3,7 @@
   "solution": {
     "name": "azd-function-custom-api-client-side-solution",
     "id": "42d3f09b-ca6f-4508-b63f-a3d2dcd4c814",
-    "version": "1.9.0.0",
+    "version": "1.10.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -35,7 +35,7 @@
     ],
     "webApiPermissionRequests": [
       {
-        "resource": "Yvand/azd-function-spfx-custom-api",
+        "resource": "azd-function-spfx-custom-api",
         "scope": "user_impersonation"
       }
     ]
