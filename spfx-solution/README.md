@@ -11,7 +11,7 @@ It may be uploaded as-is to the SharePoint app catalog with no modification, sin
 
 ## Things to know
 
-+ The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function/infra/main.parameters.json#L19) of the [function app project](../azure-function).
++ The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L19) of the [function app project](../azure-function-app).
 
 ## Minimal Path to Awesome
 
