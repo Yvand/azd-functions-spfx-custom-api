@@ -1,6 +1,7 @@
 # SPFx solution
 
-A minimal SPFx solution, with a simple webpart that requests an access token to connect to the Azure function.
+A minimal SPFx solution with a simple webpart, that requests an access token to connect to the Azure function app.  
+It may be uploaded as-is to the SharePoint app catalog with no modification, since the values that must be edited are exposed as WebPart properties.
 
 ![SPFx version](https://img.shields.io/badge/version-1.20.0-green.svg)
 
@@ -10,7 +11,7 @@ A minimal SPFx solution, with a simple webpart that requests an access token to 
 
 ## Things to know
 
-+ The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the unique name of the app registration in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function/infra/main.parameters.json#L19) of the azd project.
++ The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function/infra/main.parameters.json#L19) of the [function app project](../azure-function).
 
 ## Minimal Path to Awesome
 
@@ -22,21 +23,7 @@ A minimal SPFx solution, with a simple webpart that requests an access token to 
 
 > Include any additional steps as needed.
 
-## Features
-
-Description of the extension that expands upon high-level summary above.
-
-This extension illustrates the following concepts:
-
-- topic 1
-- topic 2
-- topic 3
-
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
-
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
-
 ## References
 
 - [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
+- [Consume enterprise APIs secured with Azure AD](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/use-aadhttpclient-enterpriseapi)
