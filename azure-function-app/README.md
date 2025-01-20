@@ -1,6 +1,6 @@
 # Azure function app
 
-This project uses Azure Developer command-line (azd) tools to deploy an Azure function app, configured to require an Entra ID authentication.  
+This project uses Azure Developer command-line (azd) tools to deploy an Azure function app, configured to require Entra ID authentication.  
 It uses the [Flex Consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/flex-consumption-plan) and is written in TypeScript.
 
 ## Prerequisites
