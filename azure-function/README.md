@@ -1,7 +1,6 @@
 # Azure resources
 
-This project uses Azure Developer CLI (azd) to automatically deploy the resources on Azure, including an Azure function app using the [Flex Consumption plan](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan).  
-The function requires Entra ID authentication, so an app registration is created for this.
+This project uses Azure Developer CLI (azd) to automatically deploy an Azure function app, using the [Flex Consumption plan](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan), configured to require an Entra ID authentication.
 
 ## Prerequisites
 
@@ -14,8 +13,8 @@ The function requires Entra ID authentication, so an app registration is created
 The account running `azd` must have at least the following roles to successfully provision the resources:
 
 + Azure role [`Contributor`](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/privileged#contributor): To create all the resources needed
-+ Azure role [`Role Based Access Control Administrator`](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/privileged#role-based-access-control-administrator): To assign roles (to access the storage account and Application Insights) to the managed identity of the Azure function
-+ Entra role [`Application Developer`](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference#application-developer): To create the app registration used by the Azure function to configure the Entra ID authentication
++ Azure role [`Role Based Access Control Administrator`](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/privileged#role-based-access-control-administrator): To assign roles (to access the storage account and Application Insights) to the managed identity of the Azure function app
++ Entra role [`Application Developer`](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference#application-developer): To create the app registration used to configure the Entra ID authentication in the Azure function app
 
 ## Known issues
 
@@ -34,7 +33,7 @@ The account running `azd` must have at least the following roles to successfully
 
 1. Review the file `infra/main.parameters.json` to customize the parameters used for provisioning the resources in Azure. Review [this article](https://learn.microsoft.com/azure/developer/azure-developer-cli/manage-environment-variables) to manage the azd's environment variables.
 
-1. Provision the resources in Azure and deploy the functions app package by running command `azd up`.
+1. Provision the resources in Azure and deploy the function app package by running command `azd up`.
 
 ## Known issues when updating the Azure resources
 
@@ -50,7 +49,7 @@ But before doing so, follow the steps below to avoid issues.
 You can now run `azd up` or `azd provision` to update the existing resources in Azure. It will connect the function app to the new app registration with no further action required.
 
 > [!IMPORTANT]
-> Once the app registration is recreated, you must re-upload the SPFx package (with no change) to the app catalog, then re-validate the trust in the API access page (to update it with the new client id).
+> Once the app registration is recreated, you must re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page (to update it with the new client id).
 
 ## Cleanup the resources in Azure
 
