@@ -1,7 +1,7 @@
 # SPFx solution
 
 A minimal SPFx solution with a simple webpart, that requests an access token to connect to the Azure function app.  
-It may be uploaded as-is to the SharePoint app catalog with no modification, since the values that must be edited are exposed as WebPart properties.
+It may be used as-is with no modification, since the values that must be edited are exposed as WebPart properties.
 
 ![SPFx version](https://img.shields.io/badge/version-1.20.0-green.svg)
 
@@ -11,17 +11,26 @@ It may be uploaded as-is to the SharePoint app catalog with no modification, sin
 
 ## Things to know
 
-+ The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L19) of the [function app project](../azure-function-app).
+The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L19) of the [function app project](../azure-function-app).
 
 ## Minimal Path to Awesome
 
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - **npm install**
-  - **gulp serve**
+1. Clone the GitHub repository and change to the the SPFx solution folder:
 
-> Include any additional steps as needed.
+   ```shell
+   git clone https://github.com/Yvand/azd-function-spfx-custom-api.git
+   cd azd-function-spfx-custom-api/spfx-solution
+   ```
+
+1. Build the project and package the solution:
+
+   ```shell
+   npm install
+   gulp gulp bundle
+   gulp package-solution --production
+   ```
+
+1. Upload the SPFx solution `azd-function-custom-api.sppkg` to the SharePoint app catalog and enable the app
 
 ## References
 
