@@ -1,6 +1,7 @@
-# Azure resources
+# Azure function app
 
-This project uses Azure Developer CLI (azd) to automatically deploy an Azure function app, using the [Flex Consumption plan](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan), configured to require an Entra ID authentication.
+This project uses Azure Developer command-line (azd) tools to deploy an Azure function app, configured to require an Entra ID authentication.  
+It uses the [Flex Consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/flex-consumption-plan) and is written in TypeScript.
 
 ## Prerequisites
 
@@ -15,11 +16,6 @@ The account running `azd` must have at least the following roles to successfully
 + Azure role [`Contributor`](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/privileged#contributor): To create all the resources needed
 + Azure role [`Role Based Access Control Administrator`](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/privileged#role-based-access-control-administrator): To assign roles (to access the storage account and Application Insights) to the managed identity of the Azure function app
 + Entra role [`Application Developer`](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference#application-developer): To create the app registration used to configure the Entra ID authentication in the Azure function app
-
-## Known issues
-
-- Azure Functions Flex Consumption plan is currently in preview, be aware about its [current limitations and issues](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan#considerations).
-- The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI)
 
 ## Initialize the project
 
@@ -50,6 +46,11 @@ You can now run `azd up` or `azd provision` to update the existing resources in 
 
 > [!IMPORTANT]
 > Once the app registration is recreated, you must re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page (to update it with the new client id).
+
+## Other known issues
+
+- Azure Functions Flex Consumption plan is currently in preview, be aware about its [current limitations and issues](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan#considerations).
+- The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI)
 
 ## Cleanup the resources in Azure
 
