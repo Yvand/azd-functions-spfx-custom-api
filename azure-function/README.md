@@ -49,7 +49,7 @@ But before doing so, follow the steps below to avoid issues.
 
 You can now run `azd up` or `azd provision` to update the existing resources in Azure. It will connect the function app to the new app registration with no further action required.
 
-> [!IMPORTAMT]  
+> [!IMPORTAMT]
 > Once the app registration is recreated, you must re-upload the SPFx package (with no change) to the app catalog, to revalidate the trust in the API access page with the new client id.
 
 ## Cleanup the resources in Azure
