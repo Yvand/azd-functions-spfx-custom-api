@@ -1,14 +1,14 @@
 {
-  "name": "functions-quickstart-spo-azd",
-  "version": "1.0.0.rc-8",
+  "name": "azd-function-spfx-custom-api",
+  "version": "1.0.0",
   "author": {
     "name": "Yvan Duhamel"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yvand/functions-quickstart-spo-azd"
+    "url": "https://github.com/Yvand/azd-function-spfx-custom-api"
   },
-  "description": "This Quickstart uses Azure Developer command-line (azd) tools to create functions for SharePoint Online",
+  "description": "Uses azd to deploy a simple Azure function app, secured with Entra ID authentication, to respond to requests from a SharePoint SPFx WebPart",
   "license": "MIT",
   "main": "dist/src/functions/*.js",
   "type": "module",
@@ -24,9 +24,9 @@
     "@azure/functions": "^4.6.0"
   },
   "devDependencies": {
-    "@types/node": "^22.9.1",
-    "azure-functions-core-tools": "^4.0.6610",
+    "@types/node": "^22.10.7",
+    "azure-functions-core-tools": "^4.0.6821",
     "rimraf": "^6.0.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   }
 }
