@@ -2,4 +2,4 @@ This repository is a simple, reusable template, to deploy all the resources need
 In other words, it automates the steps docummented in [this article](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/use-aadhttpclient-enterpriseapi), using 2 projects:
 
 - [azure-function-app](azure-function-app): An Azure function app, configured to require Entra ID authentication
-- [spfx-solution](spfx-solution): An SPFx project that contains a simple WebPart, which requests an access token to connect to the Azure function app
+- [spfx-solution](spfx-solution): An SPFx solution with a simple WebPart, that requests an access token to connect to the Azure function app
