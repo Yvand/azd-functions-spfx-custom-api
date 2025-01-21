@@ -39,18 +39,17 @@ The account running `azd` must have at least the following roles to successfully
 
 > [!IMPORTANT]
 > With `azd up` or `azd provision`, you can update the existing function app in Azure, with the changes you made to the Bicep template.  
-> Before doing so, follow the steps below to fully delete the app registration first.
+> For this to work, you need to fully delete the app registration first, which involves additional work that is explained below:
 
 1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-function-spfx-custom-api`
 1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-function-spfx-custom-api`
 
 You can now run `azd up` or `azd provision` to update the existing function app in Azure. It will configure it with a new app registration.  
-Once finished, follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication.
 
-> [!IMPORTANT]
-> Once the app registration was recreated, you must do the following:
-> - Re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page.
-> - Edit the WebPart properties to update the client ID.
+Once it is finished, you need to:
+- Follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication.
+- Re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page.
+- Edit the WebPart properties to update the client ID.
 
 ### Entra ID authentication not enabled
 
