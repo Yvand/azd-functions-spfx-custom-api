@@ -31,7 +31,7 @@ The account running `azd` must have at least the following roles to successfully
 
 1. Provision the resources in Azure and deploy the function app package by running command `azd up`.
 
-1. Due to a known issue, follow [this step](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication
+1. Due to a known issue, follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication.
 
 ## Known issues
 
@@ -55,7 +55,7 @@ You can now run `azd up` or `azd provision` to update the existing resources in 
 
 ### Entra ID authentication not enabled
 
-The Entra ID authentication appears enabled, although it is not. To actually enable it, go to function app > Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save
+After the provisioning completed, the Entra ID authentication appears to be enabled, although it is not. To actually enable it, go to function app > Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save.
 
 ### Some resources are in preview
 
