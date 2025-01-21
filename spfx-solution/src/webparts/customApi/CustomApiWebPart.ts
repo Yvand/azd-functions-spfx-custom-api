@@ -1,14 +1,14 @@
 import { Version } from '@microsoft/sp-core-library';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { AadHttpClient, HttpClientResponse } from '@microsoft/sp-http';
-import { IPropertyPaneConfiguration, PropertyPaneTextField } from '@microsoft/sp-property-pane'
+import { IPropertyPaneConfiguration, PropertyPaneTextField } from '@microsoft/sp-property-pane';
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
-import styles from './CustomApiWebPart.module.scss';
 import { formatError } from '../../common';
+import styles from './CustomApiWebPart.module.scss';
 
 export interface ICustomApiWebPartProps {
   clientAppId: string;
-  functionAppHost: string;
+  functionAppDomain: string;
   functionAppCode: string;
 }
 
@@ -16,10 +16,10 @@ export default class CustomApiWebPart extends BaseClientSideWebPart<ICustomApiWe
   public async render(): Promise<void> {
     this.domElement.innerHTML = `<div class="${styles.customApi}">Webpart is loaded</div>`;
     const clientAppId = this.properties.clientAppId;
-    const functionAppHost = this.properties.functionAppHost;
+    const functionAppDomain = this.properties.functionAppDomain;
     const functionAppCode = this.properties.functionAppCode;
 
-    if (!clientAppId || !functionAppHost || !functionAppCode) {
+    if (!clientAppId || !functionAppDomain || !functionAppCode) {
       this.domElement.innerHTML += `<div class="${styles.customApi}">Configuration is missing, edit the webpart to provide the missing values</div>`;
       return;
     }
@@ -27,8 +27,8 @@ export default class CustomApiWebPart extends BaseClientSideWebPart<ICustomApiWe
     try {
       this.domElement.innerHTML += `<div class="${styles.customApi}">Getting an access token for the resource '${clientAppId}'</div>`;
       const client: AadHttpClient = await this.context.aadHttpClientFactory.getClient(clientAppId);
-      const functionUrl = `https://${functionAppHost}/api/getData?code=${functionAppCode}`;
-      this.domElement.innerHTML += `<div class="${styles.customApi}">Access token received<br>Connecting to the function app '${functionUrl}'</div>`;
+      const functionUrl = `https://${functionAppDomain}/api/getData?code=${functionAppCode}`;
+      this.domElement.innerHTML += `<div class="${styles.customApi}">Access token received.<br>Connecting to the function app '${functionUrl}'</div>`;
       const response: HttpClientResponse = await client.get(functionUrl, AadHttpClient.configurations.v1);
       if (response.status === 200) {
         this.domElement.innerHTML += `<div class="${styles.customApi}">Data received:</div>`;
@@ -73,14 +73,14 @@ export default class CustomApiWebPart extends BaseClientSideWebPart<ICustomApiWe
                     value: this.properties.clientAppId,
                   }),
                   PropertyPaneTextField("functionAppHost", {
-                    label: "Azure function app hostname",
-                    description: "The hostname of your Azure function app",
+                    label: "Azure function app domain",
+                    description: "The domain name of your Azure function app",
                     placeholder: "<yourAppName>.azurewebsites.net",
-                    value: this.properties.functionAppHost,
+                    value: this.properties.functionAppDomain,
                   }),
                   PropertyPaneTextField("functionAppCode", {
                     label: "Azure function app key",
-                    description: "The value of one of the app keys of your Azure function app",
+                    description: "The value of an app key of your Azure function app",
                     value: this.properties.functionAppCode,
                   }),
                 ]
