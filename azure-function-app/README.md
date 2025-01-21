@@ -37,7 +37,7 @@ The account running `azd` must have at least the following roles to successfully
 
 ### Entra ID authentication not enabled
 
-After the provisioning completed, the Entra ID authentication appears to be enabled, although it is not. To actually enable it, go to function app > Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save.
+After the provisioning completed, the Entra ID authentication appears to be enabled, but it is not. To actually enable it, go to function app > Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save.
 
 ### Update the Azure resources
 
@@ -54,9 +54,9 @@ With `azd up` or `azd provision`, you can update the existing function app in Az
 1. You can now run `azd up` or `azd provision` to update the existing function app in Azure. It will configure it with a new app registration.  
 
 1. Once the function app was updated, you need to:
-   - Follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication in the function app.
-   - Re-upload the SPFx package (as-is, no change is needed) to the app catalog, and then re-validate the trust in the API access page.
-   - Edit the WebPart properties to update the client ID and the function app key.
+   1. Follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication in the function app.
+   1. Re-upload the SPFx package (as-is, no change is needed) to the app catalog, and then re-validate the trust in the API access page.
+   1. Edit the WebPart properties to update the client ID and the function app key.
 
 ### Some features are in preview
 
@@ -65,6 +65,7 @@ With `azd up` or `azd provision`, you can update the existing function app in Az
 
 ## Cleanup the resources in Azure
 
-You can delete all the resources this project created in Azure, by running the command `azd down`, or.  
-Alternatively, you can delete the resource group, which has the azd environment's name by default.  
-Then, you need to manually delete the app registration as explained in ["Update the Azure resources"](#Update-the-Azure-resources).
+To delete the resources this project created in Azure and Entra ID:
+
+- Either run the command `azd down`, or delete the resource group (which has the azd environment's name by default).
+- Manually delete the app registration as explained in ["Update the Azure resources"](#Update-the-Azure-resources).
