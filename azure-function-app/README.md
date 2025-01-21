@@ -31,6 +31,8 @@ The account running `azd` must have at least the following roles to successfully
 
 1. Provision the resources in Azure and deploy the function app package by running command `azd up`.
 
+1. Go to Authentication > Edit the Entra ID auth > Select `Allow requests from any application (Not recommended)` and Save
+
 ## Known issues when updating the Azure resources
 
 Using `azd`, you can easily apply changes which you made to the bicep files to the existing Azure resources, using commands `azd up` or `azd provision`.  
@@ -45,10 +47,13 @@ But before doing so, follow the steps below to avoid issues.
 You can now run `azd up` or `azd provision` to update the existing resources in Azure. It will connect the function app to the new app registration with no further action required.
 
 > [!IMPORTANT]
-> Once the app registration is recreated, you must re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page (to update it with the new client id).
+> Once the app registration was recreated, you must do the following:
+> - Re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page.
+> - Edit the WebPart properties to update the client ID.
 
 ## Other known issues
 
+- The Entra ID authentication appears enabled, although it is not. To actually enable the Entra ID authentication, edit it > Select `Allow requests from any application (Not recommended)` and Save
 - Azure Functions Flex Consumption plan is currently in preview, be aware about its [current limitations and issues](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan#considerations).
 - The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI)
 

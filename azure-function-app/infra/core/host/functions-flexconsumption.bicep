@@ -111,10 +111,12 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
   resource authconfig 'config' = {
     name: 'authsettingsV2'
     properties: {
-      platform: {
-        enabled: true
-        runtimeVersion: '~1'
-      }
+      // If platform is enabled, it causes error in the Azure portal (cannot retrieve app keys)
+      // If not set, no error and the authentication appears enabled, but it is not and function can be accessed anonymously
+      // platform: {
+      //   enabled: true
+      //   runtimeVersion: '~1'
+      // }
       globalValidation: {
         unauthenticatedClientAction: 'RedirectToLoginPage'
         requireAuthentication: true
@@ -136,6 +138,7 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
             allowedAudiences: [authAllowedAudiences]
             defaultAuthorizationPolicy: {
               // allowedApplications: [ sharePointPrincipalAppClientId ]
+              allowedApplications: null
               allowedPrincipals: {
                 identities: null
               }
@@ -152,22 +155,30 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
           }
         }
       }
-      login: {
-        cookieExpiration: {
-          convention: 'FixedTime'
-          timeToExpiration: '08:00:00'
-        }
-        nonce: {
-          validateNonce: true
-          nonceExpirationInterval: '00:05:00'
-        }
-        tokenStore: {
-          enabled: false
-          tokenRefreshExtensionHours: 72
-        }
-      }
+      // login: {
+      //   cookieExpiration: {
+      //     convention: 'FixedTime'
+      //     timeToExpiration: '08:00:00'
+      //   }
+      //   nonce: {
+      //     validateNonce: true
+      //     nonceExpirationInterval: '00:05:00'
+      //   }
+      //   tokenStore: {
+      //     enabled: false
+      //     tokenRefreshExtensionHours: 72
+      //   }
+      // }
     }
   }
+
+  // resource symbolicname 'functions@2024-04-01' = {
+  //   name: 'functions'
+
+  //   resource appkeys 'keys@2024-04-01' = {
+  //     name: 'newkey'
+  //   }
+  // }
 }
 
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = if (!empty(applicationInsightsName)) {
