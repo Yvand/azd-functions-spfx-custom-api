@@ -69,13 +69,13 @@ export default class CustomApiWebPart extends BaseClientSideWebPart<ICustomApiWe
                 groupFields: [
                   PropertyPaneTextField("clientAppId", {
                     label: "Client App ID",
-                    description: "The client ID of the app registration created in your Entra ID tenant",
+                    description: "The client ID of the app registration created for the function app",
                     value: this.properties.clientAppId,
                   }),
-                  PropertyPaneTextField("functionAppHost", {
+                  PropertyPaneTextField("functionAppDomain", {
                     label: "Azure function app domain",
                     description: "The domain name of your Azure function app",
-                    placeholder: "<yourAppName>.azurewebsites.net",
+                    placeholder: "YOUR_APP_NAME.azurewebsites.net",
                     value: this.properties.functionAppDomain,
                   }),
                   PropertyPaneTextField("functionAppCode", {
