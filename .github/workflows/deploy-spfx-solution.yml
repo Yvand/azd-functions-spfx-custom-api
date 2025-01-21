@@ -4,7 +4,7 @@ on:
 
 env:
   NODE_VERSION: '18.x'
-  WORKING_DIRECTORY: './spfx-custom-api'
+  WORKING_DIRECTORY: './spfx-solution'
 
 jobs:
   build-spfx-solution:
