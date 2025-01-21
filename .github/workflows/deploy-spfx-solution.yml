@@ -1,5 +1,8 @@
 name: Build the SPFx solution
 on:
+  push:
+    tags:
+      - "v*.*.*"
   workflow_dispatch:
 
 env:
@@ -15,17 +18,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Run npm ci
         run: npm ci
+
       - name: Bundle & Package
         run: |
           gulp bundle --ship
           gulp package-solution --ship
+      
       - uses: actions/upload-artifact@v4
         with:
           name: 'SPFx package'
           path: '${{ env.WORKING_DIRECTORY }}/sharepoint/solution/*.sppkg'
+      
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: 'SPFx solution ${{ github.ref_name }}'
+          files: '${{ env.WORKING_DIRECTORY }}/sharepoint/solution/*.sppkg'
+          draft: true
+          make_latest: true
