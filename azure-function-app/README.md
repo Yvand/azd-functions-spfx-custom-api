@@ -68,4 +68,4 @@ With `azd up` or `azd provision`, you can update the existing function app in Az
 To delete the resources this project created in Azure and Entra ID:
 
 - Either run the command `azd down`, or delete the resource group (which has the azd environment's name by default).
-- Manually delete the app registration as explained in ["Update the Azure resources"](#Update-the-Azure-resources).
+- Manually delete the app registration as explained in ["Update the Azure resources"](#update-the-azure-resources).
