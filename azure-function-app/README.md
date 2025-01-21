@@ -1,7 +1,7 @@
 # Azure function app
 
 This project uses Azure Developer command-line (azd) tools to deploy an Azure function app, configured to require Entra ID authentication.  
-It uses the [Flex Consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/flex-consumption-plan) and is written in TypeScript.
+It deploys a simple HTTP function, uses the [Flex Consumption plan](https://learn.microsoft.com/en-us/azure/azure-functions/flex-consumption-plan) and is written in TypeScript.
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ After the provisioning completed, the Entra ID authentication appears to be enab
 ### Some resources are in preview
 
 - Azure Functions Flex Consumption plan is currently in preview, be aware about its [current limitations and issues](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan#considerations).
-- The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI)
+- The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI).
 
 ## Cleanup the resources in Azure
 

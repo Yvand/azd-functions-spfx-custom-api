@@ -1,7 +1,7 @@
 import { Version } from '@microsoft/sp-core-library';
 import { AadHttpClient, HttpClientResponse } from '@microsoft/sp-http';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import { IPropertyPaneConfiguration, PropertyPaneTextField }from '@microsoft/sp-property-pane'
+import { IPropertyPaneConfiguration, PropertyPaneTextField } from '@microsoft/sp-property-pane'
 import { formatError } from '../../common';
 import styles from './CustomApiWebPartWebPart.module.scss';
 
@@ -13,34 +13,37 @@ export interface ICustomApiWebPartWebPartProps {
 
 export default class CustomApiWebPartWebPart extends BaseClientSideWebPart<ICustomApiWebPartWebPartProps> {
   public async render(): Promise<void> {
-    let output: string = "Webpart is loaded";
+    this.domElement.innerHTML = `<div class="${styles.customApiWebPart}">Webpart is loaded</div>`;
     const clientAppId = this.properties.clientAppId;
     const functionAppHost = this.properties.functionAppHost;
     const functionAppCode = this.properties.functionAppCode;
-    
+
     if (!clientAppId || !functionAppHost || !functionAppCode) {
-      output += "<br>Configuration is missing, edit the webpart to provide the missing values";
-      this.domElement.innerHTML = `<div class="${styles.customApiWebPart}">${output}</div>`;
+      this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Configuration is missing, edit the webpart to provide the missing values</div>`;
       return;
     }
-    
+
     try {
-      output += `<br>Getting an access token for the resource '${clientAppId}'`;
+      this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Getting an access token for the resource '${clientAppId}'</div>`;
       const client: AadHttpClient = await this.context.aadHttpClientFactory.getClient(clientAppId);
       const functionUrl = `https://${functionAppHost}/api/getData?code=${functionAppCode}`;
-      output += `<br>Access token received<br>Connecting to the function app '${functionUrl}'`;
+      this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Access token received<br>Connecting to the function app '${functionUrl}'</div>`;
       const response: HttpClientResponse = await client.get(functionUrl, AadHttpClient.configurations.v1);
-      output += `<br>Data received:<br>`;
-      const data = await response.json();
-      output += JSON.stringify(data);
+      if (response.status === 200) {
+        this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Data received:</div>`;
+        const data = await response.json();
+        this.domElement.innerHTML += JSON.stringify(data);
+      } else {
+        this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Could not get the data from the function app, received HTTP status ${response.status}</div>`;
+      }
     }
     catch (error: unknown) {
       const errorMessage = formatError(error);
-      output += `<br>Unexpected error: ${errorMessage}`;
+      this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Unexpected error: ${errorMessage}`;
       return;
     }
     finally {
-      this.domElement.innerHTML = `<div class="${styles.customApiWebPart}"${output}</div>`;
+      this.domElement.innerHTML += `<div class="${styles.customApiWebPart}">Finished.</div>`;
     }
   }
 
