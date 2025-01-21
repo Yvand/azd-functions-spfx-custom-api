@@ -40,17 +40,19 @@ The account running `azd` must have at least the following roles to successfully
 With `azd up` or `azd provision`, you can update the existing function app in Azure, with the changes you made to the Bicep template.
 
 > [!IMPORTANT]
-> For the changes to apply successfully, you have to fully delete the app registration as explained below. Then, complete the additional steps just after to update the SPFx configuration.
+> Before doing this, you have to fully delete the app registration. Then, you can perform the update, and complete the additional steps just after to update the SPFx configuration.
 
-1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-function-spfx-custom-api`
-1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-function-spfx-custom-api`
+1. Fully delete the app registration:
 
-You can now run `azd up` or `azd provision` to update the existing function app in Azure. It will configure it with a new app registration.  
+   1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-function-spfx-custom-api`
+   1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-function-spfx-custom-api`
 
-Once the function app was updated, you need to:
-- Follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication in the function app.
-- Re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page.
-- Edit the WebPart properties to update the client ID.
+1. You can now run `azd up` or `azd provision` to update the existing function app in Azure. It will configure it with a new app registration.  
+
+1. Once the function app was updated, you need to:
+   - Follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication in the function app.
+   - Re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page.
+   - Edit the WebPart properties to update the client ID.
 
 ### Entra ID authentication not enabled
 
