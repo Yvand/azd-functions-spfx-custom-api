@@ -9,7 +9,7 @@ It deploys a simple HTTP function, uses the [Flex Consumption plan](https://lear
 + [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-typescript#install-the-azure-functions-core-tools)
 + [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
 
-## Permissions required to provision the resources in Azure
+## Permissions required to provision the resources in Azure and Entra ID
 
 The account running `azd` must have at least the following roles to successfully provision the resources:
 
@@ -58,12 +58,12 @@ With `azd up` or `azd provision`, you can update the existing function app in Az
    1. Re-upload the SPFx package (as-is, no change is needed) to the app catalog, and then re-validate the trust in the API access page.
    1. Edit the WebPart properties to update the client ID and the function app key.
 
-### Some features are in preview
+### Features in preview
 
 - Azure Functions Flex Consumption plan is currently in preview, be aware about its [current limitations and issues](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan#considerations).
 - The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI).
 
-## Cleanup the resources in Azure
+## Cleanup the resources in Azure and Entra ID
 
 To delete the resources this project created in Azure and Entra ID:
 

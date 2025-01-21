@@ -9,11 +9,10 @@ It may be used as-is with no modification, since the values that must be edited 
 
 + [Node.js 18](https://www.nodejs.org/)
 
-## Things to know
+## How-to use the project
 
-The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L19) of the [function app project](../azure-function-app).
-
-## Minimal Path to Awesome
+> [!IMPORTANT]
+> The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L19) of the [function app project](../azure-function-app).
 
 1. Clone the GitHub repository and change to the the SPFx solution folder:
 
@@ -31,8 +30,3 @@ The only hardcoded setting is the Entra ID app registration name, in [`config/pa
    ```
 
 1. Upload the SPFx solution `azd-function-custom-api.sppkg` to the SharePoint app catalog and enable the app
-
-## References
-
-- [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Consume enterprise APIs secured with Azure AD](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/use-aadhttpclient-enterpriseapi)
