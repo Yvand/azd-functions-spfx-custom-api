@@ -33,4 +33,4 @@ It may be used as-is with no modification, since the values that must be edited 
 
 1. Go to the API access page and approve the request for `azd-function-spfx-custom-api`.
 
-1. Add the webpart `CustomApiWebPart` to a page, edit its properties and save the changes.
+1. Add the webpart `CustomAPI` to a page, edit its properties and publish the page.

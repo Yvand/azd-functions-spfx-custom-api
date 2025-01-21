@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
   "version": "2.0",
   "bundles": {
-    "custom-api-web-part-web-part": {
+    "custom-api-web-part": {
       "components": [
         {
-          "entrypoint": "./lib/webparts/customApiWebPart/CustomApiWebPartWebPart.js",
-          "manifest": "./src/webparts/customApiWebPart/CustomApiWebPartWebPart.manifest.json"
+          "entrypoint": "./lib/webparts/customApi/CustomApiWebPart.js",
+          "manifest": "./src/webparts/customApi/CustomApiWebPart.manifest.json"
         }
       ]
     }
@@ -14,6 +14,6 @@
   "externals": {},
   "localizedResources": {
     "HelloWorldWebPartStrings": "lib/webparts/helloWorld/loc/{locale}.js",
-    "CustomApiWebPartWebPartStrings": "lib/webparts/customApiWebPart/loc/{locale}.js"
+    "CustomApiWebPartStrings": "lib/webparts/customApi/loc/{locale}.js"
   }
 }

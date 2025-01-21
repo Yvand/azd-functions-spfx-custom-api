@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "79fe702e-346f-462c-9e3b-d02944c5625b",
-  "alias": "CustomApiWebPartWebPart",
+  "id": "1705c2fb-e402-45c8-98f8-5667ee7481b1",
+  "alias": "CustomApiWebPart",
   "componentType": "WebPart",
 
   // The "*" signifies that the version should be taken from the package.json
@@ -18,11 +18,11 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Advanced
     "group": { "default": "Advanced" },
-    "title": { "default": "CustomApiWebPart" },
-    "description": { "default": "CustomApiWebPart description" },
+    "title": { "default": "CustomAPI" },
+    "description": { "default": "CustomAPI description" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "CustomApiWebPart"
+      "description": "CustomAPI"
     }
   }]
 }
