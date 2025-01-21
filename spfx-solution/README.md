@@ -25,8 +25,12 @@ It may be used as-is with no modification, since the values that must be edited 
 
    ```shell
    npm install
-   gulp gulp bundle
+   gulp bundle
    gulp package-solution --production
    ```
 
-1. Upload the SPFx solution `azd-function-custom-api.sppkg` to the SharePoint app catalog and enable the app
+1. Upload the SPFx solution `azd-function-custom-api.sppkg` to the SharePoint app catalog and enable it.
+
+1. Go to the API access page and approve the request for `azd-function-spfx-custom-api`.
+
+1. Add the webpart `CustomApiWebPart` to a page, edit its properties and save the changes.
