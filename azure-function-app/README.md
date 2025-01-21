@@ -35,12 +35,16 @@ The account running `azd` must have at least the following roles to successfully
 
 ## Known issues
 
+### Entra ID authentication not enabled
+
+After the provisioning completed, the Entra ID authentication appears to be enabled, although it is not. To actually enable it, go to function app > Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save.
+
 ### Update the Azure resources
 
 With `azd up` or `azd provision`, you can update the existing function app in Azure, with the changes you made to the Bicep template.
 
 > [!IMPORTANT]
-> Before doing this, you have to fully delete the app registration. Then, you can perform the update, and complete the additional steps just after to update the SPFx configuration.
+> Before doing this, you have to fully delete the app registration. Then, you can perform the update, and complete the additional steps to update the SPFx configuration.
 
 1. Fully delete the app registration:
 
@@ -51,14 +55,10 @@ With `azd up` or `azd provision`, you can update the existing function app in Az
 
 1. Once the function app was updated, you need to:
    - Follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication in the function app.
-   - Re-upload the SPFx package (as-is, with no change) to the app catalog, and then re-validate the trust in the API access page.
-   - Edit the WebPart properties to update the client ID.
+   - Re-upload the SPFx package (as-is, no change is needed) to the app catalog, and then re-validate the trust in the API access page.
+   - Edit the WebPart properties to update the client ID and the function app key.
 
-### Entra ID authentication not enabled
-
-After the provisioning completed, the Entra ID authentication appears to be enabled, although it is not. To actually enable it, go to function app > Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save.
-
-### Some resources are in preview
+### Some features are in preview
 
 - Azure Functions Flex Consumption plan is currently in preview, be aware about its [current limitations and issues](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan#considerations).
 - The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI).
@@ -67,4 +67,4 @@ After the provisioning completed, the Entra ID authentication appears to be enab
 
 You can delete all the resources this project created in Azure, by running the command `azd down`, or.  
 Alternatively, you can delete the resource group, which has the azd environment's name by default.  
-Then, you need to manually delete the app registration as [explained here](#Known-issues-when-updating-the-Azure-resources).
+Then, you need to manually delete the app registration as explained in ["Update the Azure resources"](#Update-the-Azure-resources).
