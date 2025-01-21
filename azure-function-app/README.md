@@ -37,16 +37,15 @@ The account running `azd` must have at least the following roles to successfully
 
 ### Update the Azure resources
 
-Using `azd`, you can easily apply changes which you made to the bicep files to the existing Azure resources, using commands `azd up` or `azd provision`.  
-But before doing so, follow the steps below to avoid issues.
-
-> [!WARNING]
-> Do not run `azd up` or `azd provision` 2 times without fully deleting the app registration using the steps below. This is necessary because the [Bicep provider for Graph](https://learn.microsoft.com/en-us/graph/templates/overview-bicep-templates-for-graph) is in preview.
+> [!IMPORTANT]
+> With `azd up` or `azd provision`, you can update the existing function app in Azure, with the changes you made to the Bicep template.  
+> Before doing so, follow the steps below to fully delete the app registration first.
 
 1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-function-spfx-custom-api`
 1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-function-spfx-custom-api`
 
-You can now run `azd up` or `azd provision` to update the existing resources in Azure. It will connect the function app to the new app registration with no further action required.
+You can now run `azd up` or `azd provision` to update the existing function app in Azure. It will configure it with a new app registration.  
+Once finished, follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication.
 
 > [!IMPORTANT]
 > Once the app registration was recreated, you must do the following:
