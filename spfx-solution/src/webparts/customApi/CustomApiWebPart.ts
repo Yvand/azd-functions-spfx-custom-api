@@ -14,37 +14,37 @@ export interface ICustomApiWebPartProps {
 
 export default class CustomApiWebPart extends BaseClientSideWebPart<ICustomApiWebPartProps> {
   public async render(): Promise<void> {
-    this.domElement.innerHTML = `<div class="${styles.customApi}">Webpart is loaded</div>`;
+    this.domElement.innerHTML = `<div class="${styles.customApi}">Webpart is loaded`;
     const clientAppId = this.properties.clientAppId;
     const functionAppDomain = this.properties.functionAppDomain;
     const functionAppCode = this.properties.functionAppCode;
 
     if (!clientAppId || !functionAppDomain || !functionAppCode) {
-      this.domElement.innerHTML += `<div class="${styles.customApi}">Configuration is missing, edit the webpart to provide the missing values</div>`;
+      this.domElement.innerHTML += `<br>Configuration is missing, edit the webpart to provide the missing values</div>`;
       return;
     }
 
     try {
-      this.domElement.innerHTML += `<div class="${styles.customApi}">Getting an access token for the resource '${clientAppId}'</div>`;
+      this.domElement.innerHTML += `<br>Getting an access token for the resource '${clientAppId}'`;
       const client: AadHttpClient = await this.context.aadHttpClientFactory.getClient(clientAppId);
       const functionUrl = `https://${functionAppDomain}/api/getData?code=${functionAppCode}`;
-      this.domElement.innerHTML += `<div class="${styles.customApi}">Access token received.<br>Connecting to the function app '${functionUrl}'</div>`;
+      this.domElement.innerHTML += `<br>Access token received.<br>Connecting to the function app '${functionUrl}'`;
       const response: HttpClientResponse = await client.get(functionUrl, AadHttpClient.configurations.v1);
       if (response.status === 200) {
-        this.domElement.innerHTML += `<div class="${styles.customApi}">Data received:</div>`;
+        this.domElement.innerHTML += `<br>Data received:<br>`;
         const data = await response.json();
         this.domElement.innerHTML += JSON.stringify(data);
       } else {
-        this.domElement.innerHTML += `<div class="${styles.customApi}">Could not get the data from the function app, received HTTP status ${response.status}</div>`;
+        this.domElement.innerHTML += `<br>Could not get the data from the function app, received HTTP status ${response.status}`;
       }
     }
     catch (error: unknown) {
       const errorMessage = formatError(error);
-      this.domElement.innerHTML += `<div class="${styles.customApi}">Unexpected error: ${errorMessage}`;
+      this.domElement.innerHTML += `<br>Unexpected error: ${errorMessage}`;
       return;
     }
     finally {
-      this.domElement.innerHTML += `<div class="${styles.customApi}">Finished.</div>`;
+      this.domElement.innerHTML += `<br>Finished.</div>`;
     }
   }
 
