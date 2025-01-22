@@ -38,12 +38,19 @@ jobs:
         with:
           name: 'SPFx package'
           path: '${{ env.WORKING_DIRECTORY }}/sharepoint/solution/*.sppkg'
+     
+      - name: Extract version number from git tag name
+        if: startsWith(github.ref, 'refs/tags/spfx-v')
+        env:
+          TAG: ${{ github.ref_name }}
+        id: splittag
+        run: echo "spfxversion=`echo $TAG | grep -oP '(?<=spfx-v)[\d+?\.]*'`" >> $GITHUB_OUTPUT
       
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/spfx-v')
         with:
-          name: 'SPFx package ${{ github.ref_name }}'
+          name: 'SPFx package v${{ steps.splittag.outputs.spfxversion }}'
           files: '${{ env.WORKING_DIRECTORY }}/sharepoint/solution/*.sppkg'
           draft: true
           make_latest: true
