@@ -29,8 +29,8 @@ param corsAllowedOrigin string
 param authAppClientId string
 param authAllowedAudiences string
 // param sharePointPrincipalAppClientId string
-@secure()
-param authClientSecretValue string
+// @secure()
+// param authClientSecretValue string
 var authClientSecretSettingName = 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
 
 var userAssignedIdentities = identityType == 'UserAssigned'
@@ -103,7 +103,7 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
       AzureWebJobsStorage__accountName: stg.name
       AzureWebJobsStorage__credential: 'managedidentity'
       APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
-      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: authClientSecretValue
+      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'TO_BE_SExT'
       WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
     })
   }

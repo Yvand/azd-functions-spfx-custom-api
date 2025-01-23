@@ -13,7 +13,7 @@ var identifierUri = 'api://${functionAppServiceName}.azurewebsites.net'
 var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/login/aad/callback'
 
 // https://learn.microsoft.com/en-us/graph/templates/reference/applications?view=graph-bicep-1.0
-resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
+resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
   displayName: appRegistrationName
   uniqueName: appRegistrationName
   identifierUris: [identifierUri]
@@ -55,17 +55,18 @@ resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
     }
   ]
 
-  // Create a client secret
-  passwordCredentials: [
-    {
-      displayName: 'generated during Bicep template deployment'
-    }
-  ]
+  // Should not create a secret: https://github.com/microsoftgraph/msgraph-bicep-types/issues/38
+  // // Create a client secret
+  // passwordCredentials: [
+  //   {
+  //     displayName: 'generated during Bicep template deployment'
+  //   }
+  // ]
 }
 
 // Create tyhe service principal
 resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
-  appId: appRegistration.appId
+  appId: resourceApp.appId
 }
 
 // resource sharePointPrincipalApp 'Microsoft.Graph/applications@v1.0' existing =  {
@@ -73,8 +74,7 @@ resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
 //   uniqueName: 'SharePoint Online Client Extensibility Web Application Principal'
 // }
 
-output appRegistrationObjectId string = appRegistration.id
-output appRegistrationClientId string = appRegistration.appId
-output appRegistrationSecret string = appRegistration.passwordCredentials[0].secretText
-output appRegistrationIdentifierUri string = appRegistration.identifierUris[0]
+output resourceAppClientId string = resourceApp.appId
+// output resourceAppSecret string = resourceApp.passwordCredentials[0].secretText
+output resourceAppIdentifierUri string = resourceApp.identifierUris[0]
 // output sharePointPrincipalAppClientId string = sharePointPrincipalApp.appId
