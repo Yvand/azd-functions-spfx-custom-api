@@ -41,31 +41,22 @@ After the provisioning completed, the Entra ID authentication appears to be enab
 
 ### Update the Azure resources
 
-With `azd up` or `azd provision`, you can update the existing function app in Azure, with the changes you made to the Bicep template.
+With `azd up` or `azd provision`, you can update the existing function app in Azure, with the changes you made to the Bicep template.  
+But this action will clear the secret value in the environment variable `MICROSOFT_PROVIDER_AUTHENTICATION_SECRET`.  
+Once the update finished, you will have to set it back.
 
-> [!IMPORTANT]
-> Before doing this, you have to fully delete the app registration. Then, you can perform the update, and complete the additional steps to update the SPFx configuration.
+### Deleting the Azure resources
 
-1. Fully delete the app registration:
+Running the command `azd down`, or deleting the resource group, does not delete the app registration.  
+Follow the steps below to fully delete it:
 
-   1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-function-spfx-custom-api`
-   1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-function-spfx-custom-api`
+1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-function-spfx-custom-api`.
+1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-function-spfx-custom-api`.
 
-1. You can now run `azd up` or `azd provision` to update the existing function app in Azure. It will configure it with a new app registration.  
-
-1. Once the function app was updated, you need to:
-   1. Follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication in the function app.
-   1. Re-upload the SPFx package (as-is, no change is needed) to the app catalog, and then re-validate the trust in the API access page.
-   1. Edit the WebPart properties to update the client ID and the function app key.
+> [!WARNING]
+> You won't be able to re-provision the resources in Azure until you permanently deleted the app registration as explained above.
 
 ### Features in preview
 
 - Azure Functions Flex Consumption plan is currently in preview, be aware about its [current limitations and issues](https://learn.microsoft.com/azure/azure-functions/flex-consumption-plan#considerations).
 - The Graph resource provider for Bicep is currently [in preview](https://learn.microsoft.com/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI).
-
-## Cleanup the resources in Azure and Entra ID
-
-To delete the resources this project created in Azure and Entra ID:
-
-- Either run the command `azd down`, or delete the resource group (which has the azd environment's name by default).
-- Manually delete the app registration as explained in ["Update the Azure resources"](#update-the-azure-resources).

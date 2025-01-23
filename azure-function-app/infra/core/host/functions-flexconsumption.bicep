@@ -103,7 +103,7 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
       AzureWebJobsStorage__accountName: stg.name
       AzureWebJobsStorage__credential: 'managedidentity'
       APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
-      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'TO_BE_SExT'
+      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'TO_BE_SET'
       WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
     })
   }
