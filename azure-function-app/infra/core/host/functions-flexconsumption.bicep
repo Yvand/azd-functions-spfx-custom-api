@@ -112,7 +112,7 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
     name: 'authsettingsV2'
     properties: {
       // If platform is enabled, it causes error in the Azure portal (cannot retrieve app keys)
-      // If not set, no error and the authentication appears enabled, but it is not and function can be accessed anonymously
+      // If not enabled, no error and the authentication appears enabled, but it is not and function can be accessed anonymously
       // platform: {
       //   enabled: true
       //   runtimeVersion: '~1'

@@ -17,7 +17,7 @@ The account running `azd` must have at least the following roles to successfully
 + Azure role [`Role Based Access Control Administrator`](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/privileged#role-based-access-control-administrator): To assign roles (to access the storage account and Application Insights) to the managed identity of the Azure function app
 + Entra role [`Application Developer`](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference#application-developer): To create the app registration used to configure the Entra ID authentication in the Azure function app
 
-## Initialize the project
+## How-to use the project
 
 1. Clone the GitHub repository, and create an `azd` environment (in this example, `azd-function-custom-api`):
 
@@ -31,7 +31,11 @@ The account running `azd` must have at least the following roles to successfully
 
 1. Provision the resources in Azure and deploy the function app package by running command `azd up`.
 
-1. Due to a known issue, follow the steps in ["Entra ID authentication not enabled"](#Entra-ID-authentication-not-enabled) to actually enable the Entra ID authentication in the function app.
+1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) > Select the application `azd-function-spfx-custom-api` > Create a secret and copy its value.
+
+1. Navigate to your function app in [the Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites/kind/functionapp) > Environment variables > Edit `MICROSOFT_PROVIDER_AUTHENTICATION_SECRET` to set it with the secret value, and Save.
+
+1. Navigate to your function app in [the Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites/kind/functionapp) > Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save.
 
 ## Known issues
 
