@@ -103,7 +103,7 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
       AzureWebJobsStorage__accountName: stg.name
       AzureWebJobsStorage__credential: 'managedidentity'
       APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
-      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'TO_BE_SET'
+      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'REPLACE_WITH_RESOURCE_APP_SECRET'
       WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
     })
   }
@@ -111,12 +111,13 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
   resource authconfig 'config' = {
     name: 'authsettingsV2'
     properties: {
-      // If platform is enabled, it causes error in the Azure portal (cannot retrieve app keys)
-      // If not enabled, no error and the authentication appears enabled, but it is not and function can be accessed anonymously
-      // platform: {
-      //   enabled: true
-      //   runtimeVersion: '~1'
-      // }
+      // platform must be enabled for the authentication to be actually enabled
+      // But if enabled, all the identity providers must be enabled, otherwise it causes errors in the Azure portal (cannot retrieve app keys)
+      // Yes, there still remains an error in the function app homepage, but it is not blocking
+      platform: {
+        enabled: true
+        runtimeVersion: '~1'
+      }
       globalValidation: {
         unauthenticatedClientAction: 'RedirectToLoginPage'
         requireAuthentication: true
@@ -137,7 +138,6 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
           validation: {
             allowedAudiences: [authAllowedAudiences]
             defaultAuthorizationPolicy: {
-              // allowedApplications: [ sharePointSpfxAppClientId ]
               allowedApplications: empty(sharePointSpfxAppClientId)
                 ? null
                 : [
@@ -158,21 +158,39 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
             openIdIssuer: 'https://sts.windows.net/${tenant().tenantId}/v2.0'
           }
         }
+
+        // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
+        facebook: {
+          enabled: true
+        }
+        gitHub: {
+          enabled: true
+        }
+        google: {
+          enabled: true
+        }
+        legacyMicrosoftAccount: {
+          enabled: true
+        }
+        twitter: {
+          enabled: true
+        }
       }
-      // login: {
-      //   cookieExpiration: {
-      //     convention: 'FixedTime'
-      //     timeToExpiration: '08:00:00'
-      //   }
-      //   nonce: {
-      //     validateNonce: true
-      //     nonceExpirationInterval: '00:05:00'
-      //   }
-      //   tokenStore: {
-      //     enabled: false
-      //     tokenRefreshExtensionHours: 72
-      //   }
-      // }
+      // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
+      login: {
+        cookieExpiration: {
+          convention: 'FixedTime'
+          timeToExpiration: '08:00:00'
+        }
+        nonce: {
+          validateNonce: true
+          nonceExpirationInterval: '00:05:00'
+        }
+        tokenStore: {
+          enabled: false
+          tokenRefreshExtensionHours: 72
+        }
+      }
     }
   }
 
