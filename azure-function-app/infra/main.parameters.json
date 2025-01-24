@@ -16,7 +16,7 @@
         "${ALLOWED_IP_ADDRESSES}"
       ]
     },
-    "appRegistrationName": {
+    "resourceAppName": {
       "value": "azd-function-spfx-custom-api"
     },
     "sharePointTenantPrefix": {

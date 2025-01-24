@@ -47,7 +47,7 @@ param vaultName string = ''
 param addKkeyVault bool = false
 param keyVaultEnableSoftDelete bool = true
 param sharePointSpfxAppClientId string = ''
-param appRegistrationName string = ''
+param resourceAppName string = ''
 param sharePointTenantPrefix string
 var corsAllowedOrigin = 'https://${sharePointTenantPrefix}.sharepoint.com'
 
@@ -65,7 +65,7 @@ module resourceAppRegistration 'core/entraid/entraid-app.bicep' = {
   name: 'entraAppRegistration'
   scope: rg
   params: {
-    appRegistrationName: !empty(appRegistrationName) ? appRegistrationName : functionAppServiceName
+    resourceAppName: !empty(resourceAppName) ? resourceAppName : functionAppServiceName
     functionAppServiceName: functionAppServiceName
   }
 }
