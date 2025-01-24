@@ -77,4 +77,4 @@ resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
 output resourceAppClientId string = resourceApp.appId
 // output resourceAppSecret string = resourceApp.passwordCredentials[0].secretText
 output resourceAppIdentifierUri string = resourceApp.identifierUris[0]
-// output sharePointPrincipalAppClientId string = sharePointPrincipalApp.appId
+// output sharePointSpfxAppClientId string = sharePointPrincipalApp.appId

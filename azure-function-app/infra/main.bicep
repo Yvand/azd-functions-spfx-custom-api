@@ -46,6 +46,7 @@ param vNetName string = ''
 param vaultName string = ''
 param addKkeyVault bool = false
 param keyVaultEnableSoftDelete bool = true
+param sharePointSpfxAppClientId string = ''
 param appRegistrationName string = ''
 param sharePointTenantPrefix string
 var corsAllowedOrigin = 'https://${sharePointTenantPrefix}.sharepoint.com'
@@ -150,7 +151,7 @@ module api './app/api.bicep' = {
     corsAllowedOrigin: corsAllowedOrigin
     authAppClientId: resourceAppRegistration.outputs.resourceAppClientId
     authAllowedAudiences: resourceAppRegistration.outputs.resourceAppIdentifierUri
-    // sharePointPrincipalAppClientId: entraAppRegistration.outputs.sharePointPrincipalAppClientId
+    sharePointSpfxAppClientId: sharePointSpfxAppClientId
     // authClientSecretValue: resourceAppRegistration.outputs.resourceAppSecret
   }
 }

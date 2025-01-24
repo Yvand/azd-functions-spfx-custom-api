@@ -42,7 +42,7 @@ The account running `azd` must have at least the following roles to successfully
 ### Entra ID authentication not enabled
 
 After the provisioning completed, the Entra ID authentication appears to be enabled, but it is not.  
-To actually enable it, go to function app > Authentication > Edit the Identity provider: Make any change to it and save.
+To actually enable it, go to function app > Authentication > Edit the Identity provider: Make any change and save.
 
 ### Update the Azure resources
 
