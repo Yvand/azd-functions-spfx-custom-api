@@ -113,7 +113,7 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
     properties: {
       // platform must be enabled for the authentication to be actually enabled
       // But if enabled, all the identity providers must be enabled, otherwise it causes errors in the Azure portal (cannot retrieve app keys)
-      // Yes, there still remains an error in the function app homepage, but it is not blocking
+      // Yes, there still remains an error in the function app homepage: WebsitesExtension.GetFunctionsHostStatus returns a HTTP 400
       platform: {
         enabled: true
         runtimeVersion: '~1'
