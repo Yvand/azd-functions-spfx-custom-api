@@ -16,11 +16,14 @@
         "${ALLOWED_IP_ADDRESSES}"
       ]
     },
-    "appRegistrationName": {
+    "resourceAppName": {
       "value": "azd-function-spfx-custom-api"
     },
     "sharePointTenantPrefix": {
       "value": "${SHAREPOINT_TENANT_PREFIX}"
+    },
+    "sharePointSpfxAppClientId": {
+      "value": "${SHAREPOINT_SPFX_APP_CLIENT_ID}"
     },
     "appSettings": {
       "value": {

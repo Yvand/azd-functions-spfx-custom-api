@@ -18,9 +18,9 @@ param identityType string
 param corsAllowedOrigin string
 param authAppClientId string
 param authAllowedAudiences string
-// param sharePointPrincipalAppClientId string
-@secure()
-param authClientSecretValue string
+param sharePointSpfxAppClientId string
+// @secure()
+// param authClientSecretValue string
 
 var managedIdentityAuthSettings = identityType == 'UserAssigned'
   ? {
@@ -51,8 +51,8 @@ module api '../core/host/functions-flexconsumption.bicep' = {
     corsAllowedOrigin: corsAllowedOrigin
     authAppClientId: authAppClientId
     authAllowedAudiences: authAllowedAudiences
-    // sharePointPrincipalAppClientId: sharePointPrincipalAppClientId
-    authClientSecretValue: authClientSecretValue
+    sharePointSpfxAppClientId: sharePointSpfxAppClientId
+    // authClientSecretValue: authClientSecretValue
   }
 }
 

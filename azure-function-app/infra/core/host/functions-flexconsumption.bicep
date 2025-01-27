@@ -28,9 +28,9 @@ param maximumInstanceCount int = 100
 param corsAllowedOrigin string
 param authAppClientId string
 param authAllowedAudiences string
-// param sharePointPrincipalAppClientId string
-@secure()
-param authClientSecretValue string
+param sharePointSpfxAppClientId string
+// @secure()
+// param authClientSecretValue string
 var authClientSecretSettingName = 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
 
 var userAssignedIdentities = identityType == 'UserAssigned'
@@ -103,19 +103,21 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
       AzureWebJobsStorage__accountName: stg.name
       AzureWebJobsStorage__credential: 'managedidentity'
       APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
-      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: authClientSecretValue
+      MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'REPLACE_WITH_RESOURCE_APP_SECRET'
       WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
     })
   }
 
+  // https://learn.microsoft.com/en-us/azure/templates/microsoft.web/sites/config-authsettingsv2?pivots=deployment-language-bicep
   resource authconfig 'config' = {
     name: 'authsettingsV2'
     properties: {
-      // If platform is enabled, it causes error in the Azure portal (cannot retrieve app keys)
-      // If not set, no error and the authentication appears enabled, but it is not and function can be accessed anonymously
+      // platform must be enabled for the authentication to be actually enabled
+      // But if enabled, all the identity providers must be enabled, otherwise it causes errors in the Azure portal (cannot retrieve app keys)
+      // Yes, there still remains an error in the function app homepage: WebsitesExtension.GetFunctionsHostStatus returns a HTTP 400
       // platform: {
       //   enabled: true
-      //   runtimeVersion: '~1'
+      //   runtimeVersion: '2'
       // }
       globalValidation: {
         unauthenticatedClientAction: 'RedirectToLoginPage'
@@ -137,8 +139,11 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
           validation: {
             allowedAudiences: [authAllowedAudiences]
             defaultAuthorizationPolicy: {
-              // allowedApplications: [ sharePointPrincipalAppClientId ]
-              allowedApplications: null
+              allowedApplications: empty(sharePointSpfxAppClientId)
+                ? null
+                : [
+                    sharePointSpfxAppClientId
+                  ]
               allowedPrincipals: {
                 identities: null
               }
@@ -154,7 +159,25 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
             openIdIssuer: 'https://sts.windows.net/${tenant().tenantId}/v2.0'
           }
         }
+
+        // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
+        // facebook: {
+        //   enabled: true
+        // }
+        // gitHub: {
+        //   enabled: true
+        // }
+        // google: {
+        //   enabled: true
+        // }
+        // legacyMicrosoftAccount: {
+        //   enabled: true
+        // }
+        // twitter: {
+        //   enabled: true
+        // }
       }
+      // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
       // login: {
       //   cookieExpiration: {
       //     convention: 'FixedTime'

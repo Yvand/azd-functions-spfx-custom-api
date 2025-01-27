@@ -6,16 +6,16 @@ extension microsoftGraphV1
 // az deployment sub create --location francecentral --template-file main.bicep
 // https://learn.microsoft.com/en-us/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI
 
-param appRegistrationName string
+param resourceAppName string
 param functionAppServiceName string
 
 var identifierUri = 'api://${functionAppServiceName}.azurewebsites.net'
 var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/login/aad/callback'
 
 // https://learn.microsoft.com/en-us/graph/templates/reference/applications?view=graph-bicep-1.0
-resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
-  displayName: appRegistrationName
-  uniqueName: appRegistrationName
+resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
+  displayName: resourceAppName
+  uniqueName: resourceAppName
   identifierUris: [identifierUri]
 
   // Enable user authentication
@@ -29,13 +29,13 @@ resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
   api: {
     oauth2PermissionScopes: [
       {
-        adminConsentDescription: 'Allows the app to access ${appRegistrationName} on behalf of the signed-in user.'
-        adminConsentDisplayName: 'Access ${appRegistrationName}'
+        adminConsentDescription: 'Allows the app to access ${resourceAppName} on behalf of the signed-in user.'
+        adminConsentDisplayName: 'Access ${resourceAppName}'
         id: 'c15bfc6e-9c52-4e6f-97ff-f595ff93b4a5'
         isEnabled: true
         type: 'User'
-        userConsentDescription: 'Allow the application to access ${appRegistrationName} on your behalf.'
-        userConsentDisplayName: 'Access ${appRegistrationName}'
+        userConsentDescription: 'Allow the application to access ${resourceAppName} on your behalf.'
+        userConsentDisplayName: 'Access ${resourceAppName}'
         value: 'user_impersonation'
       }
     ]
@@ -55,17 +55,18 @@ resource appRegistration 'Microsoft.Graph/applications@v1.0' = {
     }
   ]
 
-  // Create a client secret
-  passwordCredentials: [
-    {
-      displayName: 'generated during Bicep template deployment'
-    }
-  ]
+  // Should not create a secret: https://github.com/microsoftgraph/msgraph-bicep-types/issues/38
+  // // Create a client secret
+  // passwordCredentials: [
+  //   {
+  //     displayName: 'generated during Bicep template deployment'
+  //   }
+  // ]
 }
 
 // Create tyhe service principal
 resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
-  appId: appRegistration.appId
+  appId: resourceApp.appId
 }
 
 // resource sharePointPrincipalApp 'Microsoft.Graph/applications@v1.0' existing =  {
@@ -73,8 +74,7 @@ resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
 //   uniqueName: 'SharePoint Online Client Extensibility Web Application Principal'
 // }
 
-output appRegistrationObjectId string = appRegistration.id
-output appRegistrationClientId string = appRegistration.appId
-output appRegistrationSecret string = appRegistration.passwordCredentials[0].secretText
-output appRegistrationIdentifierUri string = appRegistration.identifierUris[0]
-// output sharePointPrincipalAppClientId string = sharePointPrincipalApp.appId
+output resourceAppClientId string = resourceApp.appId
+// output resourceAppSecret string = resourceApp.passwordCredentials[0].secretText
+output resourceAppIdentifierUri string = resourceApp.identifierUris[0]
+// output sharePointSpfxAppClientId string = sharePointPrincipalApp.appId

@@ -46,7 +46,8 @@ param vNetName string = ''
 param vaultName string = ''
 param addKkeyVault bool = false
 param keyVaultEnableSoftDelete bool = true
-param appRegistrationName string = ''
+param sharePointSpfxAppClientId string = ''
+param resourceAppName string = ''
 param sharePointTenantPrefix string
 var corsAllowedOrigin = 'https://${sharePointTenantPrefix}.sharepoint.com'
 
@@ -60,11 +61,11 @@ var allowedIpAddressesNoEmptyString = empty(allowedIpAddresses) || (length(allow
 var functionAppServiceName = !empty(apiServiceName) ? apiServiceName : '${abbrs.webSitesFunctions}api-${resourceToken}'
 
 // Create the app registration in Entra ID
-module entraAppRegistration 'core/entraid/entraid-app.bicep' = {
+module resourceAppRegistration 'core/entraid/entraid-app.bicep' = {
   name: 'entraAppRegistration'
   scope: rg
   params: {
-    appRegistrationName: !empty(appRegistrationName) ? appRegistrationName : functionAppServiceName
+    resourceAppName: !empty(resourceAppName) ? resourceAppName : functionAppServiceName
     functionAppServiceName: functionAppServiceName
   }
 }
@@ -148,10 +149,10 @@ module api './app/api.bicep' = {
     appSettings: appSettings
     virtualNetworkSubnetId: serviceVirtualNetwork.outputs.appSubnetID
     corsAllowedOrigin: corsAllowedOrigin
-    authAppClientId: entraAppRegistration.outputs.appRegistrationClientId
-    authAllowedAudiences: entraAppRegistration.outputs.appRegistrationIdentifierUri
-    // sharePointPrincipalAppClientId: entraAppRegistration.outputs.sharePointPrincipalAppClientId
-    authClientSecretValue: entraAppRegistration.outputs.appRegistrationSecret
+    authAppClientId: resourceAppRegistration.outputs.resourceAppClientId
+    authAllowedAudiences: resourceAppRegistration.outputs.resourceAppIdentifierUri
+    sharePointSpfxAppClientId: sharePointSpfxAppClientId
+    // authClientSecretValue: resourceAppRegistration.outputs.resourceAppSecret
   }
 }
 
@@ -264,6 +265,5 @@ output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applica
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
 output AZURE_FUNCTIONS_SERVICE_NAME string = api.outputs.SERVICE_API_NAME
-output appRegistrationObjectId string = entraAppRegistration.outputs.appRegistrationObjectId
-output appRegistrationClientId string = entraAppRegistration.outputs.appRegistrationClientId
-output appRegistrationSecret string = entraAppRegistration.outputs.appRegistrationSecret
+output resourceAppClientId string = resourceAppRegistration.outputs.resourceAppClientId
+// output resourceAppSecret string = resourceAppRegistration.outputs.resourceAppSecret
