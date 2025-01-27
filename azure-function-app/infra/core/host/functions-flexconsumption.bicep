@@ -108,16 +108,17 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
     })
   }
 
+  // https://learn.microsoft.com/en-us/azure/templates/microsoft.web/sites/config-authsettingsv2?pivots=deployment-language-bicep
   resource authconfig 'config' = {
     name: 'authsettingsV2'
     properties: {
       // platform must be enabled for the authentication to be actually enabled
       // But if enabled, all the identity providers must be enabled, otherwise it causes errors in the Azure portal (cannot retrieve app keys)
       // Yes, there still remains an error in the function app homepage: WebsitesExtension.GetFunctionsHostStatus returns a HTTP 400
-      platform: {
-        enabled: true
-        runtimeVersion: '~1'
-      }
+      // platform: {
+      //   enabled: true
+      //   runtimeVersion: '2'
+      // }
       globalValidation: {
         unauthenticatedClientAction: 'RedirectToLoginPage'
         requireAuthentication: true
@@ -159,38 +160,38 @@ resource functions 'Microsoft.Web/sites@2024-04-01' = {
           }
         }
 
-        // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
-        facebook: {
-          enabled: true
-        }
-        gitHub: {
-          enabled: true
-        }
-        google: {
-          enabled: true
-        }
-        legacyMicrosoftAccount: {
-          enabled: true
-        }
-        twitter: {
-          enabled: true
-        }
+        // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
+        // facebook: {
+        //   enabled: true
+        // }
+        // gitHub: {
+        //   enabled: true
+        // }
+        // google: {
+        //   enabled: true
+        // }
+        // legacyMicrosoftAccount: {
+        //   enabled: true
+        // }
+        // twitter: {
+        //   enabled: true
+        // }
       }
-      // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
-      login: {
-        cookieExpiration: {
-          convention: 'FixedTime'
-          timeToExpiration: '08:00:00'
-        }
-        nonce: {
-          validateNonce: true
-          nonceExpirationInterval: '00:05:00'
-        }
-        tokenStore: {
-          enabled: false
-          tokenRefreshExtensionHours: 72
-        }
-      }
+      // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
+      // login: {
+      //   cookieExpiration: {
+      //     convention: 'FixedTime'
+      //     timeToExpiration: '08:00:00'
+      //   }
+      //   nonce: {
+      //     validateNonce: true
+      //     nonceExpirationInterval: '00:05:00'
+      //   }
+      //   tokenStore: {
+      //     enabled: false
+      //     tokenRefreshExtensionHours: 72
+      //   }
+      // }
     }
   }
 
