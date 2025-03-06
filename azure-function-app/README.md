@@ -22,7 +22,7 @@ The account running `azd` must have at least the following roles to successfully
 1. Clone the GitHub repository, and create an `azd` environment (in this example, `azd-function-custom-api`):
 
     ```shell
-    git clone https://github.com/Yvand/azd-function-spfx-custom-api.git
+    git clone --depth 1 https://github.com/Yvand/azd-function-spfx-custom-api.git
     cd azd-function-spfx-custom-api/azure-function-app
     azd env new azd-function-custom-api
     ```
