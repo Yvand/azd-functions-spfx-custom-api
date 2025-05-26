@@ -38,7 +38,7 @@ var kind = 'functionapp,linux'
 var baseAppSettings = {
   // Application Insights settings are always included
   APPLICATIONINSIGHTS_AUTHENTICATION_STRING: applicationInsightsIdentity
-  APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
+  //APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
 }
 
 var functionAuthenticationSettings = {
@@ -82,7 +82,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
 }
 
 // Create a Flex Consumption Function App to host the API
-module api 'br/public:avm/res/web/site:0.15.1' = {
+module api 'br/public:avm/res/web/site:0.16.0' = {
   name: '${serviceName}-flex-consumption'
   params: {
     kind: kind
@@ -126,69 +126,82 @@ module api 'br/public:avm/res/web/site:0.15.1' = {
       }
     }
     virtualNetworkSubnetId: !empty(virtualNetworkSubnetId) ? virtualNetworkSubnetId : null
-    appSettingsKeyValuePairs: allAppSettings
 
-    authSettingV2Configuration: {
-      enabled: true
-      globalValidation: {
-        unauthenticatedClientAction: 'RedirectToLoginPage'
-        requireAuthentication: true
-        redirectToProvider: 'azureActiveDirectory'
+
+    configs: [
+      {
+        name: 'appsettings'
+        applicationInsightResourceId: applicationInsights.id
+        // storageAccountResourceId: stg.id
+        // storageAccountUseIdentityAuthentication: true
+        properties: allAppSettings
       }
-      httpSettings: {
-        requireHttps: true
-        routes: {
-          apiPrefix: '/.auth'
-        }
-        forwardProxy: {
-          convention: 'NoProxy'
-        }
-      }
-      identityProviders: {
-        azureActiveDirectory: {
-          enabled: true
-          validation: {
-            allowedAudiences: [authAllowedAudiences]
-            defaultAuthorizationPolicy: {
-              allowedApplications: empty(sharePointSpfxAppClientId)
-                ? null
-                : [
-                    sharePointSpfxAppClientId
-                  ]
-              allowedPrincipals: {
-                identities: null
+      {
+        name: 'authsettingsV2'
+        properties: {
+          globalValidation: {
+            requireAuthentication: true
+            unauthenticatedClientAction: 'RedirectToLoginPage'
+            redirectToProvider: 'azureActiveDirectory'
+          }
+          httpSettings: {
+            requireHttps: true
+            routes: {
+              apiPrefix: '/.auth'
+            }
+            forwardProxy: {
+              convention: 'NoProxy'
+            }
+          }
+          identityProviders: {
+            azureActiveDirectory: {
+              enabled: true
+              validation: {
+                allowedAudiences: [authAllowedAudiences]
+                defaultAuthorizationPolicy: {
+                  allowedApplications: empty(sharePointSpfxAppClientId)
+                    ? null
+                    : [
+                        sharePointSpfxAppClientId
+                      ]
+                  allowedPrincipals: {
+                    identities: null
+                  }
+                }
+                jwtClaimChecks: {}
+              }
+              login: {
+                disableWWWAuthenticate: false
+              }
+              registration: {
+                clientId: authAppClientId
+                clientSecretSettingName: authClientSecretSettingName
+                openIdIssuer: 'https://sts.windows.net/${tenant().tenantId}/v2.0'
               }
             }
-            jwtClaimChecks: {}
-          }
-          login: {
-            disableWWWAuthenticate: false
-          }
-          registration: {
-            clientId: authAppClientId
-            clientSecretSettingName: authClientSecretSettingName
-            openIdIssuer: 'https://sts.windows.net/${tenant().tenantId}/v2.0'
+
+            // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
+            // facebook: {
+            //   enabled: true
+            // }
+            // gitHub: {
+            //   enabled: true
+            // }
+            // google: {
+            //   enabled: true
+            // }
+            // legacyMicrosoftAccount: {
+            //   enabled: true
+            // }
+            // twitter: {
+            //   enabled: true
+            // }
           }
         }
-
-        // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
-        // facebook: {
-        //   enabled: true
-        // }
-        // gitHub: {
-        //   enabled: true
-        // }
-        // google: {
-        //   enabled: true
-        // }
-        // legacyMicrosoftAccount: {
-        //   enabled: true
-        // }
-        // twitter: {
-        //   enabled: true
-        // }
       }
-    }
+    ]
+
+    // appSettingsKeyValuePairs: allAppSettings
   }
 }
 
