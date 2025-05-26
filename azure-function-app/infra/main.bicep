@@ -72,7 +72,7 @@ param principalId string = deployer().objectId
 param sharePointSpfxAppClientId string = ''
 param resourceAppName string = ''
 param sharePointTenantPrefix string
-var corsAllowedOrigin = 'https://${sharePointTenantPrefix}.sharepoint.com'
+var corsAllowedOrigins = ['https://${sharePointTenantPrefix}.sharepoint.com', 'https://portal.azure.com']
 
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
@@ -160,7 +160,7 @@ module api './app/api.bicep' = {
       : ''
     appSettings: appSettings
     virtualNetworkSubnetId: vnetEnabled ? serviceVirtualNetwork.outputs.appSubnetID : ''
-    corsAllowedOrigin: corsAllowedOrigin
+    corsAllowedOrigins: corsAllowedOrigins
     authAppClientId: resourceAppRegistration.outputs.resourceAppClientId
     authAllowedAudiences: resourceAppRegistration.outputs.resourceAppIdentifierUri
     sharePointSpfxAppClientId: sharePointSpfxAppClientId

@@ -21,7 +21,7 @@ param enableTable bool = false
 param enableFile bool = false
 
 // authsettings
-param corsAllowedOrigin string
+param corsAllowedOrigins array = []
 param authAppClientId string
 param authAllowedAudiences string
 param sharePointSpfxAppClientId string
@@ -121,9 +121,8 @@ module api 'br/public:avm/res/web/site:0.15.1' = {
     siteConfig: {
       alwaysOn: false
       cors: {
-        allowedOrigins: [
-          'https://portal.azure.com'
-        ]
+        allowedOrigins: corsAllowedOrigins
+        supportCredentials: true
       }
     }
     virtualNetworkSubnetId: !empty(virtualNetworkSubnetId) ? virtualNetworkSubnetId : null
