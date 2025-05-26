@@ -1,4 +1,5 @@
 param name string
+@description('Primary location for all resources & Flex Consumption Function App')
 param location string = resourceGroup().location
 param tags object = {}
 param applicationInsightsName string = ''
@@ -8,53 +9,192 @@ param runtimeName string
 param runtimeVersion string
 param serviceName string = 'api'
 param storageAccountName string
+param deploymentStorageContainerName string
 param virtualNetworkSubnetId string = ''
 param instanceMemoryMB int = 2048
 param maximumInstanceCount int = 100
-param identityId string = ''
-param identityClientId string = ''
-@allowed(['SystemAssigned', 'UserAssigned'])
-param identityType string
+param UserAssignedManagedIdentityId string = ''
+param UserAssignedManagedIdentityClientId string = ''
+param enableBlob bool = true
+param enableQueue bool = false
+param enableTable bool = false
+param enableFile bool = false
+
+// authsettings
 param corsAllowedOrigin string
 param authAppClientId string
 param authAllowedAudiences string
 param sharePointSpfxAppClientId string
-// @secure()
-// param authClientSecretValue string
 
-var managedIdentityAuthSettings = identityType == 'UserAssigned'
+@allowed(['SystemAssigned', 'UserAssigned'])
+param identityType string
+
+var applicationInsightsIdentity = identityType == 'UserAssigned'
+  ? 'ClientId=${UserAssignedManagedIdentityClientId};Authorization=AAD'
+  : 'Authorization=AAD'
+var kind = 'functionapp,linux'
+
+// Create base application settings
+var baseAppSettings = {
+  // Application Insights settings are always included
+  APPLICATIONINSIGHTS_AUTHENTICATION_STRING: applicationInsightsIdentity
+  APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
+}
+
+var functionAuthenticationSettings = {
+  MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'REPLACE_WITH_RESOURCE_APP_SECRET'
+  WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
+}
+
+var userManagedIdentityStorageAccountSettings = identityType == 'UserAssigned'
   ? {
-      AzureWebJobsStorage__clientId: identityClientId
-      APPLICATIONINSIGHTS_AUTHENTICATION_STRING: 'ClientId=${identityClientId};Authorization=AAD'
+      AzureWebJobsStorage__credential: 'managedidentity'
+      AzureWebJobsStorage__clientId: UserAssignedManagedIdentityClientId
     }
-  : {
-      APPLICATIONINSIGHTS_AUTHENTICATION_STRING: 'Authorization=AAD'
-    }
+  : {}
 
-module api '../core/host/functions-flexconsumption.bicep' = {
-  name: '${serviceName}-functions-module'
+// Dynamically build storage endpoint settings based on feature flags
+var blobSettings = enableBlob ? { AzureWebJobsStorage__blobServiceUri: stg.properties.primaryEndpoints.blob } : {}
+var queueSettings = enableQueue ? { AzureWebJobsStorage__queueServiceUri: stg.properties.primaryEndpoints.queue } : {}
+var tableSettings = enableTable ? { AzureWebJobsStorage__tableServiceUri: stg.properties.primaryEndpoints.table } : {}
+var fileSettings = enableFile ? { AzureWebJobsStorage__fileServiceUri: stg.properties.primaryEndpoints.file } : {}
+
+// Merge all app settings
+var allAppSettings = union(
+  appSettings,
+  blobSettings,
+  queueSettings,
+  tableSettings,
+  fileSettings,
+  baseAppSettings,
+  userManagedIdentityStorageAccountSettings,
+  functionAuthenticationSettings
+)
+
+var authClientSecretSettingName = 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
+
+resource stg 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
+  name: storageAccountName
+}
+
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = if (!empty(applicationInsightsName)) {
+  name: applicationInsightsName
+}
+
+// Create a Flex Consumption Function App to host the API
+module api 'br/public:avm/res/web/site:0.15.1' = {
+  name: '${serviceName}-flex-consumption'
   params: {
+    kind: kind
     name: name
     location: location
     tags: union(tags, { 'azd-service-name': serviceName })
-    identityType: identityType
-    identityId: identityId
-    appSettings: union(appSettings, managedIdentityAuthSettings)
-    applicationInsightsName: applicationInsightsName
-    appServicePlanId: appServicePlanId
-    runtimeName: runtimeName
-    runtimeVersion: runtimeVersion
-    storageAccountName: storageAccountName
-    virtualNetworkSubnetId: virtualNetworkSubnetId
-    instanceMemoryMB: instanceMemoryMB
-    maximumInstanceCount: maximumInstanceCount
-    corsAllowedOrigin: corsAllowedOrigin
-    authAppClientId: authAppClientId
-    authAllowedAudiences: authAllowedAudiences
-    sharePointSpfxAppClientId: sharePointSpfxAppClientId
-    // authClientSecretValue: authClientSecretValue
+    serverFarmResourceId: appServicePlanId
+    managedIdentities: {
+      systemAssigned: identityType == 'SystemAssigned'
+      userAssignedResourceIds: identityType == 'SystemAssigned'
+        ? null
+        : [
+            '${UserAssignedManagedIdentityId}'
+          ]
+    }
+    functionAppConfig: {
+      deployment: {
+        storage: {
+          type: 'blobContainer'
+          value: '${stg.properties.primaryEndpoints.blob}${deploymentStorageContainerName}'
+          authentication: {
+            type: identityType == 'SystemAssigned' ? 'SystemAssignedIdentity' : 'UserAssignedIdentity'
+            userAssignedIdentityResourceId: identityType == 'UserAssigned' ? UserAssignedManagedIdentityId : ''
+          }
+        }
+      }
+      scaleAndConcurrency: {
+        instanceMemoryMB: instanceMemoryMB
+        maximumInstanceCount: maximumInstanceCount
+      }
+      runtime: {
+        name: runtimeName
+        version: runtimeVersion
+      }
+    }
+    siteConfig: {
+      alwaysOn: false
+      cors: {
+        allowedOrigins: [
+          'https://portal.azure.com'
+        ]
+      }
+    }
+    virtualNetworkSubnetId: !empty(virtualNetworkSubnetId) ? virtualNetworkSubnetId : null
+    appSettingsKeyValuePairs: allAppSettings
+
+    authSettingV2Configuration: {
+      enabled: true
+      globalValidation: {
+        unauthenticatedClientAction: 'RedirectToLoginPage'
+        requireAuthentication: true
+        redirectToProvider: 'azureActiveDirectory'
+      }
+      httpSettings: {
+        requireHttps: true
+        routes: {
+          apiPrefix: '/.auth'
+        }
+        forwardProxy: {
+          convention: 'NoProxy'
+        }
+      }
+      identityProviders: {
+        azureActiveDirectory: {
+          enabled: true
+          validation: {
+            allowedAudiences: [authAllowedAudiences]
+            defaultAuthorizationPolicy: {
+              allowedApplications: empty(sharePointSpfxAppClientId)
+                ? null
+                : [
+                    sharePointSpfxAppClientId
+                  ]
+              allowedPrincipals: {
+                identities: null
+              }
+            }
+            jwtClaimChecks: {}
+          }
+          login: {
+            disableWWWAuthenticate: false
+          }
+          registration: {
+            clientId: authAppClientId
+            clientSecretSettingName: authClientSecretSettingName
+            openIdIssuer: 'https://sts.windows.net/${tenant().tenantId}/v2.0'
+          }
+        }
+
+        // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
+        // facebook: {
+        //   enabled: true
+        // }
+        // gitHub: {
+        //   enabled: true
+        // }
+        // google: {
+        //   enabled: true
+        // }
+        // legacyMicrosoftAccount: {
+        //   enabled: true
+        // }
+        // twitter: {
+        //   enabled: true
+        // }
+      }
+    }
   }
 }
 
 output SERVICE_API_NAME string = api.outputs.name
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = api.outputs.identityPrincipalId
+// Ensure output is always string, handle potential null from module output if SystemAssigned is not used
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = identityType == 'SystemAssigned'
+  ? api.outputs.?systemAssignedMIPrincipalId ?? ''
+  : ''

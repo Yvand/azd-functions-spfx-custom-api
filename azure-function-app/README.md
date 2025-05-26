@@ -5,7 +5,7 @@ It deploys a simple HTTP function, uses the [Flex Consumption plan](https://lear
 
 ## Prerequisites
 
-+ [Node.js 20](https://www.nodejs.org/)
++ [Node.js 22](https://www.nodejs.org/)
 + [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-typescript#install-the-azure-functions-core-tools)
 + [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
 
