@@ -95,6 +95,9 @@ module resourceAppRegistration 'app/entraid-app.bicep' = {
   params: {
     resourceAppName: !empty(resourceAppName) ? resourceAppName : functionAppName
     functionAppServiceName: functionAppName
+    UserAssignedManagedIdentityId: apiServiceIdentityType == 'UserAssigned'
+      ? apiUserAssignedIdentity.outputs.resourceId
+      : ''
   }
 }
 

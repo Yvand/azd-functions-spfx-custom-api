@@ -41,8 +41,11 @@ var baseAppSettings = {
   //APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
 }
 
-var functionAuthenticationSettings = {
+var functionAuthenticationSettings = empty(UserAssignedManagedIdentityId) ? {
   MICROSOFT_PROVIDER_AUTHENTICATION_SECRET: 'REPLACE_WITH_RESOURCE_APP_SECRET'
+  WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
+} : {
+  OVERRIDE_USE_MI_FIC_ASSERTION_CLIENTID: UserAssignedManagedIdentityClientId
   WEBSITE_AUTH_AAD_ALLOWED_TENANTS: tenant().tenantId
 }
 
@@ -71,7 +74,7 @@ var allAppSettings = union(
   functionAuthenticationSettings
 )
 
-var authClientSecretSettingName = 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET'
+var authClientSecretSettingName = empty(UserAssignedManagedIdentityId) ? 'MICROSOFT_PROVIDER_AUTHENTICATION_SECRET' : 'OVERRIDE_USE_MI_FIC_ASSERTION_CLIENTID'
 
 resource stg 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
   name: storageAccountName
@@ -83,6 +86,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
 
 // Create a Flex Consumption Function App to host the API
 module api 'br/public:avm/res/web/site:0.16.0' = {
+// module api '../../../../bicep-registry-modules/avm/res/web/site/main.bicep' = {
   name: '${serviceName}-flex-consumption'
   params: {
     kind: kind
@@ -127,7 +131,6 @@ module api 'br/public:avm/res/web/site:0.16.0' = {
     }
     virtualNetworkSubnetId: !empty(virtualNetworkSubnetId) ? virtualNetworkSubnetId : null
 
-
     configs: [
       {
         name: 'appsettings'
@@ -141,7 +144,7 @@ module api 'br/public:avm/res/web/site:0.16.0' = {
         properties: {
           globalValidation: {
             requireAuthentication: true
-            unauthenticatedClientAction: 'RedirectToLoginPage'
+            unauthenticatedClientAction: 'Return401'
             redirectToProvider: 'azureActiveDirectory'
           }
           httpSettings: {

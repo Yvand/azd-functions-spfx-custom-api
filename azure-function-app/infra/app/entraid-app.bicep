@@ -8,9 +8,12 @@ extension microsoftGraphV1
 
 param resourceAppName string
 param functionAppServiceName string
+param UserAssignedManagedIdentityId string = ''
 
 var identifierUri = 'api://${functionAppServiceName}.azurewebsites.net'
 var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/login/aad/callback'
+
+
 
 // https://learn.microsoft.com/en-us/graph/templates/reference/applications?view=graph-bicep-1.0
 resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
@@ -54,6 +57,16 @@ resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
       ]
     }
   ]
+
+   resource myMsiFic 'federatedIdentityCredentials@v1.0' = if (!empty(UserAssignedManagedIdentityId)) {
+    name: '${resourceApp.uniqueName}/msiAsFic'
+    description: 'Trust the workloads UAMI to impersonate the App'
+    audiences: [
+       'api://AzureADTokenExchange'
+    ]
+    issuer: '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0'
+    subject: UserAssignedManagedIdentityId
+  }
 
   // Should not create a secret: https://github.com/microsoftgraph/msgraph-bicep-types/issues/38
   // // Create a client secret
