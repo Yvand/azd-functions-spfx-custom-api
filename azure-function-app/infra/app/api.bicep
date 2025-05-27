@@ -147,6 +147,10 @@ module api 'br/public:avm/res/web/site:0.16.0' = {
             unauthenticatedClientAction: 'Return401'
             redirectToProvider: 'azureActiveDirectory'
           }
+          platform: {
+            enabled: true
+            runtimeVersion: '~1'
+          }
           httpSettings: {
             requireHttps: true
             routes: {
