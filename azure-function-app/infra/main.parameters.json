@@ -21,7 +21,7 @@
       "value": ["${ALLOWED_IP_ADDRESSES}"]
     },
     "resourceAppName": {
-      "value": "azd-function-spfx-custom-api-tests"
+      "value": "azd-function-spfx-custom-api"
     },
     "sharePointTenantPrefix": {
       "value": "${SHAREPOINT_TENANT_PREFIX}"
