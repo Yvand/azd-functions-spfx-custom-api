@@ -69,7 +69,6 @@ param vNetName string = ''
 param keyVaultName string = ''
 @description('Id of the user identity to be used for testing and debugging. This is not required in production. Leave empty if not needed.')
 param principalId string = deployer().objectId
-param sharePointSpfxAppClientId string = ''
 param resourceAppName string = ''
 param sharePointTenantPrefix string
 var corsAllowedOrigins = ['https://${sharePointTenantPrefix}.sharepoint.com', 'https://portal.azure.com']
@@ -166,7 +165,6 @@ module api './app/api.bicep' = {
     corsAllowedOrigins: corsAllowedOrigins
     authAppClientId: resourceAppRegistration.outputs.resourceAppClientId
     authAllowedAudiences: resourceAppRegistration.outputs.resourceAppIdentifierUri
-    sharePointSpfxAppClientId: sharePointSpfxAppClientId
   }
 }
 

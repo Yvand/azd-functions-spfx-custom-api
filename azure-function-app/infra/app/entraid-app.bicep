@@ -13,8 +13,6 @@ param UserAssignedManagedIdentityId string = ''
 var identifierUri = 'api://${functionAppServiceName}.azurewebsites.net'
 var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/login/aad/callback'
 
-
-
 // https://learn.microsoft.com/en-us/graph/templates/reference/applications?view=graph-bicep-1.0
 resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
   displayName: resourceAppName
@@ -58,11 +56,11 @@ resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
     }
   ]
 
-   resource myMsiFic 'federatedIdentityCredentials@v1.0' = if (!empty(UserAssignedManagedIdentityId)) {
+  resource myMsiFic 'federatedIdentityCredentials@v1.0' = if (!empty(UserAssignedManagedIdentityId)) {
     name: '${resourceApp.uniqueName}/msiAsFic'
     description: 'Trust the workloads UAMI to impersonate the App'
     audiences: [
-       'api://AzureADTokenExchange'
+      'api://AzureADTokenExchange'
     ]
     issuer: '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0'
     subject: UserAssignedManagedIdentityId
@@ -82,12 +80,6 @@ resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
   appId: resourceApp.appId
 }
 
-// resource sharePointPrincipalApp 'Microsoft.Graph/applications@v1.0' existing =  {
-//   // It does not work: 'uniqueName' of that app is null, the value is only set in 'displayName' (which cannot be used here)
-//   uniqueName: 'SharePoint Online Client Extensibility Web Application Principal'
-// }
-
 output resourceAppClientId string = resourceApp.appId
 // output resourceAppSecret string = resourceApp.passwordCredentials[0].secretText
 output resourceAppIdentifierUri string = resourceApp.identifierUris[0]
-// output sharePointSpfxAppClientId string = sharePointPrincipalApp.appId
