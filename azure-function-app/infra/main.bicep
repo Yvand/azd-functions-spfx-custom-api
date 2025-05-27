@@ -58,7 +58,7 @@ param vnetEnabled bool = true
 param addKeyVault bool = false
 param apiServiceName string = ''
 @allowed(['SystemAssigned', 'UserAssigned'])
-param apiServiceIdentityType string = 'SystemAssigned'
+param apiServiceIdentityType string = 'UserAssigned'
 param apiUserAssignedIdentityName string = ''
 param applicationInsightsName string = ''
 param appServicePlanName string = ''

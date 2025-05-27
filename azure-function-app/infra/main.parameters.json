@@ -11,15 +11,6 @@
     "resourceGroupName": {
       "value": "${AZURE_ENV_NAME}"
     },
-    "apiServiceIdentityType": {
-      "value": "UserAssigned"
-    },
-    "addKeyVault": {
-      "value": "false"
-    },
-    "allowedIpAddresses": {
-      "value": ["${ALLOWED_IP_ADDRESSES}"]
-    },
     "resourceAppName": {
       "value": "azd-function-spfx-custom-api"
     },
