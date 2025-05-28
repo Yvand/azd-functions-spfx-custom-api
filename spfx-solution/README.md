@@ -7,7 +7,7 @@ It may be used as-is with no modification, since the values that must be edited 
 
 ## Prerequisites
 
-+ [Node.js 22](https://www.nodejs.org/)
+- [Node.js 22](https://www.nodejs.org/)
 
 ## How-to use the project
 
