@@ -12,7 +12,7 @@ It may be used as-is with no modification, since the values that must be edited 
 ## How-to use the project
 
 > [!IMPORTANT]
-> The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L19) of the [function app project](../azure-function-app).
+> The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L15) of the [function app project](../azure-function-app).
 
 1. Clone the GitHub repository and change to the the SPFx solution folder:
 
