@@ -5,7 +5,7 @@ It deploys a simple HTTP function, uses the [Flex Consumption plan](https://lear
 
 ## Prerequisites
 
-+ [Node.js 20](https://www.nodejs.org/)
++ [Node.js 22](https://www.nodejs.org/)
 + [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-typescript#install-the-azure-functions-core-tools)
 + [Azure Developer CLI (azd)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
 
@@ -31,24 +31,7 @@ The account running `azd` must have at least the following roles to successfully
 
 1. Provision the resources in Azure and deploy the function app package by running command `azd up`.
 
-1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) > Select the application `azd-function-spfx-custom-api` > Create a secret and copy its value.
-
-1. Navigate to your function app in [the Azure portal](https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Web%2Fsites/kind/functionapp) and go to:
-   1. Environment variables > Edit `MICROSOFT_PROVIDER_AUTHENTICATION_SECRET` to set it with the secret value, and Save.
-   1. Authentication > Edit the Identity provider > Select `Allow requests from any application (Not recommended)` and Save.
-
 ## Known issues
-
-### Entra ID authentication not enabled
-
-After the provisioning completed, the Entra ID authentication appears to be enabled, but it is not.  
-To actually enable it, go to function app > Authentication > Edit the Identity provider: Make any change and save.
-
-### Update the Azure resources
-
-Using command `azd up` or `azd provision`, you can update the existing function app in Azure, with the changes you made to the Bicep template.  
-But this action will clear the resource app's secret stored in the environment variable `MICROSOFT_PROVIDER_AUTHENTICATION_SECRET`.  
-Once the update finished, you have to set it back (you may create a new secret if necessary).
 
 ### Deleting the Azure resources
 
