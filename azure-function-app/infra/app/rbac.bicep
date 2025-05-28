@@ -14,7 +14,7 @@ var queueRoleDefinitionId = '974c5e8b-45b9-4653-ba55-5f855dd0fb88' // Storage Qu
 var tableRoleDefinitionId = '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3' // Storage Table Data Contributor role
 var monitoringRoleDefinitionId = '3913510d-42f4-4e42-8a64-420c390055eb' // Monitoring Metrics Publisher role ID
 var keyVaultSecretsUserRoleDefinitionId = '4633458b-17de-408a-b874-0445c86b69e6' // Key Vault Secrets User role ID
-var keyVaultAdministratorRoleDefinitionId = '00482a5a-887f-4fb3-b363-3b7fe8e74483' // Key Vault Secrets User role ID
+var keyVaultAdministratorRoleDefinitionId = '00482a5a-887f-4fb3-b363-3b7fe8e74483' // Key Vault Administrator role ID
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' existing = {
   name: storageAccountName
