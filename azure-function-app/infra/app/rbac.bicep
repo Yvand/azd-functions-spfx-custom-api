@@ -128,7 +128,7 @@ resource vaultRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01
 }
 
 // Role assignment for the key-vault - User Identity
-resource vaultRoleAssignment_User 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(keyVaultName)) {
+resource vaultRoleAssignment_User 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(keyVaultName) && allowUserIdentityPrincipal && !empty(userIdentityPrincipalId)) {
   name: guid(keyVault.id, userIdentityPrincipalId, keyVaultAdministratorRoleDefinitionId)
   scope: keyVault
   properties: {
