@@ -25,12 +25,12 @@ param corsAllowedOrigins array = []
 param authAppClientId string
 param authAllowedAudiences string
 
+@allowed(['SystemAssigned', 'UserAssigned'])
+param identityType string
+
 // Starting 2025-03, SPFx gets access tokens as the enterprise app "SharePoint Online Web Client Extensibility"
 // https://devblogs.microsoft.com/microsoft365dev/changes-on-sharepoint-framework-spfx-permission-grants-in-microsoft-entra-id/
 var sharePointSpfxClientExtensibilityClientId = '08e18876-6177-487e-b8b5-cf950c1e598c'
-
-@allowed(['SystemAssigned', 'UserAssigned'])
-param identityType string
 
 var applicationInsightsIdentity = identityType == 'UserAssigned'
   ? 'ClientId=${UserAssignedManagedIdentityClientId};Authorization=AAD'
@@ -93,7 +93,6 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
 
 // Create a Flex Consumption Function App to host the API
 module api 'br/public:avm/res/web/site:0.16.0' = {
-  // module api '../../../../bicep-registry-modules/avm/res/web/site/main.bicep' = {
   name: '${serviceName}-flex-consumption'
   params: {
     kind: kind
@@ -189,29 +188,10 @@ module api 'br/public:avm/res/web/site:0.16.0' = {
                 openIdIssuer: 'https://sts.windows.net/${tenant().tenantId}/v2.0'
               }
             }
-
-            // // Replicate the settings applied by Azure portal when saving changes in the Entra identity provider
-            // facebook: {
-            //   enabled: true
-            // }
-            // gitHub: {
-            //   enabled: true
-            // }
-            // google: {
-            //   enabled: true
-            // }
-            // legacyMicrosoftAccount: {
-            //   enabled: true
-            // }
-            // twitter: {
-            //   enabled: true
-            // }
           }
         }
       }
     ]
-
-    // appSettingsKeyValuePairs: allAppSettings
   }
 }
 

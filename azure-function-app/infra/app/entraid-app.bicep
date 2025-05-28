@@ -1,10 +1,4 @@
-// targetScope = 'subscription'
-
 extension microsoftGraphV1
-
-// https://github.com/microsoftgraph/msgraph-bicep-types
-// az deployment sub create --location francecentral --template-file main.bicep
-// https://learn.microsoft.com/en-us/graph/templates/quickstart-create-bicep-interactive-mode?tabs=CLI
 
 param resourceAppName string
 param functionAppServiceName string
@@ -75,8 +69,8 @@ resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
   // ]
 }
 
-// Create tyhe service principal
-resource clientSp 'Microsoft.Graph/servicePrincipals@v1.0' = {
+// Create the service principal
+resource servicePrincipal 'Microsoft.Graph/servicePrincipals@v1.0' = {
   appId: resourceApp.appId
 }
 
