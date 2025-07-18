@@ -29,7 +29,7 @@ It may be used as-is with no modification, since the values that must be edited 
    gulp package-solution --production
    ```
 
-1. Upload the SPFx solution `azd-function-custom-api.sppkg` to the SharePoint app catalog and enable it.
+1. Upload the SPFx solution `azd-functions-spfx-custom-api.sppkg` to the SharePoint app catalog and enable it.
 
 1. Go to the API access page and approve the request for `azd-functions-spfx-custom-api`.
 

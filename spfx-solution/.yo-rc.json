@@ -8,11 +8,11 @@
       "@microsoft/teams-js": "2.24.0"
     },
     "version": "1.21.1",
-    "libraryName": "azd-function-custom-api",
+    "libraryName": "azd-functions-spfx-custom-api",
     "libraryId": "42d3f09b-ca6f-4508-b63f-a3d2dcd4c814",
     "environment": "spo",
     "packageManager": "npm",
-    "solutionName": "azd-function-custom-api",
+    "solutionName": "azd-functions-spfx-custom-api",
     "solutionShortDescription": "custom-api description",
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,

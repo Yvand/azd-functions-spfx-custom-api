@@ -1,9 +1,9 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "azd-function-custom-api-client-side-solution",
+    "name": "azd-functions-spfx-custom-api-client-side-solution",
     "id": "42d3f09b-ca6f-4508-b63f-a3d2dcd4c814",
-    "version": "1.1.0.0",
+    "version": "1.2.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -27,8 +27,8 @@
     },
     "features": [
       {
-        "title": "azd-function-custom-api Feature",
-        "description": "The feature that activates elements of the azd-function-custom-api solution.",
+        "title": "azd-functions-spfx-custom-api Feature",
+        "description": "The feature that activates elements of the azd-functions-spfx-custom-api solution.",
         "id": "14d53ea8-c6b5-4fe1-a03d-94278f7355ae",
         "version": "1.0.0.0"
       }
@@ -41,6 +41,6 @@
     ]
   },
   "paths": {
-    "zippedPackage": "solution/azd-function-custom-api.sppkg"
+    "zippedPackage": "solution/azd-functions-spfx-custom-api.sppkg"
   }
 }
