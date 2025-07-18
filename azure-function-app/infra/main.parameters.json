@@ -12,7 +12,7 @@
       "value": "${AZURE_ENV_NAME}"
     },
     "resourceAppName": {
-      "value": "azd-function-spfx-custom-api"
+      "value": "azd-functions-spfx-custom-api"
     },
     "sharePointTenantPrefix": {
       "value": "${SHAREPOINT_TENANT_PREFIX}"

@@ -22,8 +22,8 @@ The account running `azd` must have at least the following roles to successfully
 1. Clone the GitHub repository, and create an `azd` environment (in this example, `azd-function-custom-api`):
 
     ```shell
-    git clone --depth 1 https://github.com/Yvand/azd-function-spfx-custom-api.git
-    cd azd-function-spfx-custom-api/azure-function-app
+    git clone --depth 1 https://github.com/Yvand/azd-functions-spfx-custom-api.git
+    cd azd-functions-spfx-custom-api/azure-function-app
     azd env new azd-function-custom-api
     ```
 
@@ -38,8 +38,8 @@ The account running `azd` must have at least the following roles to successfully
 Running the command `azd down`, or deleting the resource group, deletes all the resources in Azure, but it does not delete the app registration in Entra ID.  
 Follow the steps below to fully delete it:
 
-1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-function-spfx-custom-api`.
-1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-function-spfx-custom-api`.
+1. Go to the [app registrations](https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade/quickStartType~/null/sourceType/Microsoft_AAD_IAM) and delete the application `azd-functions-spfx-custom-api`.
+1. Then, click on the tab "Deleted applications", and permanently delete the application `azd-functions-spfx-custom-api`.
 
 > [!WARNING]
 > You won't be able to successfully re-provision the resources in Azure until you permanently deleted the app registration as explained above.

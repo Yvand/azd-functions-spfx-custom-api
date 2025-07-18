@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
-name: azd-function-spfx-custom-api
+name: azd-functions-spfx-custom-api
 metadata:
   template: Yvand/azd-functions-sharepoint-webhooks@1.0.0
 services:

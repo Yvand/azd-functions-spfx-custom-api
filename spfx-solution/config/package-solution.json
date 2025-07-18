@@ -9,7 +9,7 @@
     "isDomainIsolated": false,
     "developer": {
       "name": "Yvan Duhamel",
-      "websiteUrl": "https://github.com/Yvand/azd-function-spfx-custom-api",
+      "websiteUrl": "https://github.com/Yvand/azd-functions-spfx-custom-api",
       "privacyUrl": "",
       "termsOfUseUrl": "",
       "mpnId": "Undefined-1.20.0"
@@ -35,7 +35,7 @@
     ],
     "webApiPermissionRequests": [
       {
-        "resource": "azd-function-spfx-custom-api",
+        "resource": "azd-functions-spfx-custom-api",
         "scope": "user_impersonation"
       }
     ]

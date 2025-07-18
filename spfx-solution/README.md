@@ -12,13 +12,13 @@ It may be used as-is with no modification, since the values that must be edited 
 ## How-to use the project
 
 > [!IMPORTANT]
-> The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-function-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L15) of the [function app project](../azure-function-app).
+> The only hardcoded setting is the Entra ID app registration name, in [`config/package-solution.json`](config/package-solution.json#L38). It is set to `azd-functions-spfx-custom-api` and it must match the app registration's name in Entra ID. This setting is also reflected in the [`main.parameters.json`](../azure-function-app/infra/main.parameters.json#L15) of the [function app project](../azure-function-app).
 
 1. Clone the GitHub repository and change to the the SPFx solution folder:
 
    ```shell
-   git clone https://github.com/Yvand/azd-function-spfx-custom-api.git
-   cd azd-function-spfx-custom-api/spfx-solution
+   git clone https://github.com/Yvand/azd-functions-spfx-custom-api.git
+   cd azd-functions-spfx-custom-api/spfx-solution
    ```
 
 1. Build the project and package the solution:
@@ -31,6 +31,6 @@ It may be used as-is with no modification, since the values that must be edited 
 
 1. Upload the SPFx solution `azd-function-custom-api.sppkg` to the SharePoint app catalog and enable it.
 
-1. Go to the API access page and approve the request for `azd-function-spfx-custom-api`.
+1. Go to the API access page and approve the request for `azd-functions-spfx-custom-api`.
 
 1. Add the webpart `CustomAPI` to a page, edit its properties and publish the page.
