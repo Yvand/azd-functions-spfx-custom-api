@@ -4,7 +4,8 @@ param resourceAppName string
 param functionAppServiceName string
 param UserAssignedManagedIdentityId string = ''
 
-var identifierUri = 'api://${functionAppServiceName}.azurewebsites.net'
+// The identifierUri must be compliant with https://learn.microsoft.com/en-us/entra/identity-platform/identifier-uri-restrictions
+var identifierUri = 'api://${tenant().tenantId}/${functionAppServiceName}'
 var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/login/aad/callback'
 
 // https://learn.microsoft.com/en-us/graph/templates/reference/applications?view=graph-bicep-1.0
