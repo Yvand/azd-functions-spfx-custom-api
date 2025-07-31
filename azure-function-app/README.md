@@ -34,7 +34,7 @@ The account running `azd` must have at least the following roles to successfully
 > [!WARNING]
 > Deploying the package to Azure might fail with this error:  
 > `ERROR: error executing step command 'deploy --all': failed deploying service 'api': publishing zip file: deployment failed`  
-> If so, it may be deployed using func cli instead: `func azure functionapp publish <func-api-YOUR_FUNC_APP_NAME>`
+> If so, it may be deployed using func cli instead: `func azure functionapp publish YOUR_FUNC_APP_NAME`
 
 ## Known issues
 
