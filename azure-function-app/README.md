@@ -31,11 +31,10 @@ The account running `azd` must have at least the following roles to successfully
 
 1. Provision the resources in Azure and deploy the function app package by running command `azd up`.
 
-    > [!WARNING]
-    > Deploying the package to Azure might fail with this error:  
-    > `ERROR: error executing step command 'deploy --all': failed deploying service 'api': publishing zip file: deployment failed`  
-    > If so, it may be deployed using func cli instead:  
-    > `func azure functionapp publish <func-api-YOUR_FUNC_APP_NAME>`
+> [!WARNING]
+> Deploying the package to Azure might fail with this error:  
+> `ERROR: error executing step command 'deploy --all': failed deploying service 'api': publishing zip file: deployment failed`  
+> If so, it may be deployed using func cli instead: `func azure functionapp publish <func-api-YOUR_FUNC_APP_NAME>`
 
 ## Known issues
 
