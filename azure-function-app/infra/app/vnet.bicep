@@ -30,6 +30,7 @@ module virtualNetwork 'br/public:avm/res/network/virtual-network:0.6.1' = {
         addressPrefix: '10.0.1.0/24'
         privateEndpointNetworkPolicies: 'Disabled'
         privateLinkServiceNetworkPolicies: 'Enabled'
+        defaultOutboundAccess: false
       }
       {
         name: appSubnetName
@@ -37,6 +38,7 @@ module virtualNetwork 'br/public:avm/res/network/virtual-network:0.6.1' = {
         privateEndpointNetworkPolicies: 'Disabled'
         privateLinkServiceNetworkPolicies: 'Enabled'
         delegation: 'Microsoft.App/environments'
+        defaultOutboundAccess: false
       }
     ]
   }
