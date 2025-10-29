@@ -165,8 +165,8 @@ module api './app/api.bicep' = {
     appSettings: appSettings
     virtualNetworkSubnetId: vnetEnabled ? serviceVirtualNetwork.outputs.appSubnetID : ''
     corsAllowedOrigins: corsAllowedOrigins
-    authAppClientId: resourceAppRegistration.outputs.resourceAppClientId
-    authAllowedAudiences: resourceAppRegistration.outputs.resourceAppIdentifierUri
+    authAppClientId: resourceAppRegistration.outputs.APP_REGISTRATION_CLIENT_ID
+    authAllowedAudiences: resourceAppRegistration.outputs.RESOURCE_APP_IDENTIFIER_URI
   }
 }
 
@@ -328,3 +328,4 @@ output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
 output SERVICE_API_NAME string = api.outputs.SERVICE_API_NAME
 output AZURE_FUNCTION_NAME string = api.outputs.SERVICE_API_NAME
+output APP_REGISTRATION_CLIENT_ID string = resourceAppRegistration.outputs.APP_REGISTRATION_CLIENT_ID

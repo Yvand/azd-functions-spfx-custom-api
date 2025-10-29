@@ -75,6 +75,6 @@ resource servicePrincipal 'Microsoft.Graph/servicePrincipals@v1.0' = {
   appId: resourceApp.appId
 }
 
-output resourceAppClientId string = resourceApp.appId
+output APP_REGISTRATION_CLIENT_ID string = resourceApp.appId
 // output resourceAppSecret string = resourceApp.passwordCredentials[0].secretText
-output resourceAppIdentifierUri string = resourceApp.identifierUris[0]
+output RESOURCE_APP_IDENTIFIER_URI string = resourceApp.identifierUris[0]

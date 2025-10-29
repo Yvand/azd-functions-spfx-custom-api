@@ -8,3 +8,10 @@ services:
     project: .
     language: js
     host: function
+hooks:
+  predown:
+    posix:
+      shell: sh
+      run: ./scripts/remove-app-registration.sh
+      continueOnError: false
+      interactive: true
