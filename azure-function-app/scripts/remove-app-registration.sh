@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # -e: immediately exit if any command has a non-zero exit status
-# -u: immediately exit if using a variable not previously declared
-# -o: prevents errors in a pipeline from being masked
-set -euo pipefail
+# -o pipefail: prevents errors in a pipeline from being masked
+set -eo pipefail
 
 # https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/azd-extensibility#use-environment-variables-with-hooks
 # Use the `get-values` azd command to retrieve environment variables from the `.env` file
@@ -24,7 +23,7 @@ if [ -z "$AZURE_TENANT_ID" ]; then
    exit 1
 fi
 
-echo "Deleting app registration $APP_REGISTRATION_CLIENT_ID from Entra ID tenant ${AZURE_TENANT_ID}..."
-az account set --subscription $AZURE_TENANT_ID
+echo "Deleting app registration $APP_REGISTRATION_CLIENT_ID in subscription ${AZURE_SUBSCRIPTION_ID}..."
+az account set --subscription $AZURE_SUBSCRIPTION_ID
 az ad app delete --id $APP_REGISTRATION_CLIENT_ID
 echo "App registration $APP_REGISTRATION_CLIENT_ID deleted successfully."

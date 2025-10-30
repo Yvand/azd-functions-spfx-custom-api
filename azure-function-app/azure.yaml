@@ -13,5 +13,10 @@ hooks:
     posix:
       shell: sh
       run: ./scripts/remove-app-registration.sh
-      continueOnError: false
+      continueOnError: true
+      interactive: true
+  postprovision:
+      shell: sh
+      run: node ./scripts/update-solution-package.js ${APP_REGISTRATION_CLIENT_NAME}
+      continueOnError: true
       interactive: true

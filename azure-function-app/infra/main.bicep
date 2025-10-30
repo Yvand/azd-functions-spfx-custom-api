@@ -329,3 +329,4 @@ output AZURE_TENANT_ID string = tenant().tenantId
 output SERVICE_API_NAME string = api.outputs.SERVICE_API_NAME
 output AZURE_FUNCTION_NAME string = api.outputs.SERVICE_API_NAME
 output APP_REGISTRATION_CLIENT_ID string = resourceAppRegistration.outputs.APP_REGISTRATION_CLIENT_ID
+output APP_REGISTRATION_CLIENT_NAME string = resourceAppName
