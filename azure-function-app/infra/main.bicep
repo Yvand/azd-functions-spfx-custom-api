@@ -69,7 +69,7 @@ param vNetName string = ''
 param keyVaultName string = ''
 @description('Id of the user identity to be used for testing and debugging. This is not required in production. Leave empty if not needed.')
 param principalId string = deployer().objectId
-param resourceAppName string = ''
+param appRegistrationName string = ''
 param sharePointTenantPrefix string
 var corsAllowedOrigins = ['https://${sharePointTenantPrefix}.sharepoint.com', 'https://portal.azure.com']
 
@@ -92,7 +92,7 @@ module resourceAppRegistration 'app/entraid-app.bicep' = {
   name: 'entraAppRegistration'
   scope: rg
   params: {
-    resourceAppName: !empty(resourceAppName) ? resourceAppName : functionAppName
+    appRegistrationName: !empty(appRegistrationName) ? appRegistrationName : functionAppName
     functionAppServiceName: functionAppName
     UserAssignedManagedIdentityId: apiServiceIdentityType == 'UserAssigned'
       ? apiUserAssignedIdentity.outputs.resourceId
@@ -329,4 +329,4 @@ output AZURE_TENANT_ID string = tenant().tenantId
 output SERVICE_API_NAME string = api.outputs.SERVICE_API_NAME
 output AZURE_FUNCTION_NAME string = api.outputs.SERVICE_API_NAME
 output APP_REGISTRATION_CLIENT_ID string = resourceAppRegistration.outputs.APP_REGISTRATION_CLIENT_ID
-output APP_REGISTRATION_CLIENT_NAME string = resourceAppName
+output APP_REGISTRATION_CLIENT_NAME string = appRegistrationName

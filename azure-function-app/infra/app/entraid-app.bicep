@@ -1,6 +1,6 @@
 extension microsoftGraphV1
 
-param resourceAppName string
+param appRegistrationName string
 param functionAppServiceName string
 param UserAssignedManagedIdentityId string = ''
 
@@ -10,8 +10,8 @@ var redirectUri = 'https://${functionAppServiceName}.azurewebsites.net/.auth/log
 
 // https://learn.microsoft.com/en-us/graph/templates/reference/applications?view=graph-bicep-1.0
 resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
-  displayName: resourceAppName
-  uniqueName: resourceAppName
+  displayName: appRegistrationName
+  uniqueName: appRegistrationName
   identifierUris: [identifierUri]
 
   // Enable user authentication
@@ -25,13 +25,13 @@ resource resourceApp 'Microsoft.Graph/applications@v1.0' = {
   api: {
     oauth2PermissionScopes: [
       {
-        adminConsentDescription: 'Allows the app to access ${resourceAppName} on behalf of the signed-in user.'
-        adminConsentDisplayName: 'Access ${resourceAppName}'
+        adminConsentDescription: 'Allows the app to access ${appRegistrationName} on behalf of the signed-in user.'
+        adminConsentDisplayName: 'Access ${appRegistrationName}'
         id: 'c15bfc6e-9c52-4e6f-97ff-f595ff93b4a5'
         isEnabled: true
         type: 'User'
-        userConsentDescription: 'Allow the application to access ${resourceAppName} on your behalf.'
-        userConsentDisplayName: 'Access ${resourceAppName}'
+        userConsentDescription: 'Allow the application to access ${appRegistrationName} on your behalf.'
+        userConsentDisplayName: 'Access ${appRegistrationName}'
         value: 'user_impersonation'
       }
     ]
