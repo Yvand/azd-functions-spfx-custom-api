@@ -8,6 +8,8 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+echo -e "\nStarting script $(basename "$0")..."
+
 # https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/azd-extensibility#use-environment-variables-with-hooks
 # Use the `get-values` azd command to retrieve environment variables from the `.env` file
 while IFS='=' read -r key value; do
@@ -27,7 +29,7 @@ if [ -z "$AZURE_TENANT_ID" ]; then
    exit 1
 fi
 
-echo -e "\nDeleting app registration $APP_REGISTRATION_CLIENT_ID in subscription ${AZURE_SUBSCRIPTION_ID}..."
+echo -e "Deleting app registration $APP_REGISTRATION_CLIENT_ID in subscription ${AZURE_SUBSCRIPTION_ID}..."
 az account set --subscription $AZURE_SUBSCRIPTION_ID
 az ad app delete --id $APP_REGISTRATION_CLIENT_ID
-echo -e "${YELLOW}App registration $APP_REGISTRATION_CLIENT_ID deleted successfully. Make sure to delete it permanently before provisionning this environment again.${NC}"
+echo -e "${YELLOW}App registration $APP_REGISTRATION_CLIENT_ID deleted successfully.\nIMPORTANT: Make sure to delete it permanently before reprovisioning this environment.${NC}"
