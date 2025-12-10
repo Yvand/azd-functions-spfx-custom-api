@@ -11,8 +11,8 @@
     "resourceGroupName": {
       "value": "${AZURE_ENV_NAME}"
     },
-    "resourceAppName": {
-      "value": "azd-functions-spfx-custom-api"
+    "appRegistrationName": {
+      "value": "${AZURE_ENV_NAME}"
     },
     "sharePointTenantPrefix": {
       "value": "${SHAREPOINT_TENANT_PREFIX}"
