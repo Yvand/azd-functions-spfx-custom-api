@@ -32,4 +32,4 @@ fi
 #echo -e "Deleting app registration '$APP_REGISTRATION_CLIENT_ID' in subscription '${AZURE_SUBSCRIPTION_ID}'..."
 az account set --subscription $AZURE_SUBSCRIPTION_ID
 az ad app delete --id $APP_REGISTRATION_CLIENT_ID
-echo -e "${YELLOW}Deleted app registration '$APP_REGISTRATION_CLIENT_ID'.\nIMPORTANT: Make sure to delete it permanently in Entra ID before reprovisioning this environment.${NC}"
+echo -e "${YELLOW}Moved app registration '$APP_REGISTRATION_CLIENT_ID' to the recycle bin.\nIMPORTANT: Make sure to delete it permanently in Entra ID before reprovisioning this environment.${NC}"
