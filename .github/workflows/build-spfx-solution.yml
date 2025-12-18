@@ -26,9 +26,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Run npm ci
-        run: npm ci
       
       - name: Extract version number from git tag name
         if: startsWith(github.ref, 'refs/tags/spfx-v')
@@ -41,10 +38,8 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/spfx-v')
         run: jq --arg version "${{ steps.splittag.outputs.spfxversion }}" '.solution.version = $version' config/package-solution.json > tmp.json && mv tmp.json config/package-solution.json
 
-      - name: Bundle & Package
-        run: |
-          heft test --clean --production
-          heft package-solution --production
+      - run: npm ci
+      - run: npm run build
       
       - uses: actions/upload-artifact@v4
         with:
