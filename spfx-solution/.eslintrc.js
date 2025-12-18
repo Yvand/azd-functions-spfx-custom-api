@@ -288,9 +288,13 @@ module.exports = {
         // ====================================================================
         // @microsoft/eslint-plugin-spfx
         // ====================================================================
-        '@microsoft/spfx/import-requires-chunk-name': 1,
         '@microsoft/spfx/no-require-ensure': 2,
-        '@microsoft/spfx/pair-react-dom-render-unmount': 1
+
+        // Require chunk names for dynamic imports in SPFx projects. https://www.npmjs.com/package/@rushstack/eslint-plugin
+        '@rushstack/import-requires-chunk-name': 1,
+
+        // Ensure that React components rendered with ReactDOM.render() are unmounted with ReactDOM.unmountComponentAtNode(). https://www.npmjs.com/package/@rushstack/eslint-plugin
+        '@rushstack/pair-react-dom-render-unmount': 1
       }
     },
     {
