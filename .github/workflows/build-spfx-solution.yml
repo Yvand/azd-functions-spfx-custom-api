@@ -43,8 +43,8 @@ jobs:
 
       - name: Bundle & Package
         run: |
-          gulp bundle --ship
-          gulp package-solution --ship
+          heft test --clean --production
+          heft package-solution --production
       
       - uses: actions/upload-artifact@v4
         with:
