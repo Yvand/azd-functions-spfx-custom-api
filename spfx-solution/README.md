@@ -25,8 +25,7 @@ It may be used as-is with no modification, since the values that must be edited 
 
    ```shell
    npm install
-   gulp bundle
-   gulp package-solution --production
+   npm run build
    ```
 
 1. Upload the SPFx solution `azd-functions-spfx-custom-api.sppkg` to the SharePoint app catalog and enable it.
