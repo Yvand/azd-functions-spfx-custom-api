@@ -3,7 +3,7 @@
 A minimal SPFx solution with a simple webpart, that requests an access token to connect to the Azure function app.  
 It may be used as-is with no modification, since the values that must be edited are exposed as WebPart properties.
 
-![SPFx version](https://img.shields.io/badge/version-1.21.1-green.svg)
+![SPFx version](https://img.shields.io/badge/version-1.22.1-green.svg)
 
 ## Prerequisites
 
